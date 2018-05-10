@@ -44,6 +44,9 @@ public class UsuarioGenerado extends javax.swing.JInternalFrame {
         jLabel34 = new javax.swing.JLabel();
         chkEntregarUsuario = new javax.swing.JCheckBox();
 
+        setTitle("Nuevo usuario de internet generado");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pc.png"))); // NOI18N
+
         jPanel1.setBackground(new java.awt.Color(139, 156, 168));
 
         jPanel4.setBackground(new java.awt.Color(218, 210, 226));

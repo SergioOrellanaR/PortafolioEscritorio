@@ -43,6 +43,7 @@ public class Login extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Odontológica linda sonrisa: Sistema de gestión");
         setBackground(new java.awt.Color(139, 156, 168));
 
         jPanel1.setBackground(new java.awt.Color(139, 156, 168));

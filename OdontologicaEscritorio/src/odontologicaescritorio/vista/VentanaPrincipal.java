@@ -82,9 +82,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         mnuOdontologia = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         mnuRecepcion = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         mnuLogistica = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -199,6 +209,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuAdministracion.setText("Módulo de administración");
         mnuAdministracion.setEnabled(false);
 
+        mnuManejoUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pc.png"))); // NOI18N
         mnuManejoUsuarios.setText("Manejo de usuarios");
         mnuManejoUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,6 +218,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuAdministracion.add(mnuManejoUsuarios);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_persona.png"))); // NOI18N
         jMenuItem3.setText("Manejo de funcionarios");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,6 +232,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuOdontologia.setText("Módulo de odontología");
         mnuOdontologia.setEnabled(false);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_persona.png"))); // NOI18N
         jMenuItem2.setText("Manejo de pacientes");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,11 +241,52 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuOdontologia.add(jMenuItem2);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenu1.setText("Servicios");
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem4.setText("Manejo de servicios");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem5.setText("Mis servicios");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        mnuOdontologia.add(jMenu1);
+
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
+        jMenu2.setText("Sistema de horas");
+
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
+        jMenuItem6.setText("Mi agenda de horas");
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
+        jMenuItem7.setText("Planificar mis horas");
+        jMenu2.add(jMenuItem7);
+
+        mnuOdontologia.add(jMenu2);
+
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_producto.png"))); // NOI18N
+        jMenuItem11.setText("Enviar solicitudes a logística");
+        mnuOdontologia.add(jMenuItem11);
+
         barraMenu.add(mnuOdontologia);
 
         mnuRecepcion.setText("Módulo de recepción");
         mnuRecepcion.setEnabled(false);
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_persona.png"))); // NOI18N
         jMenuItem1.setText("Manejo de pacientes");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +299,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         mnuLogistica.setText("Módulo de logística");
         mnuLogistica.setEnabled(false);
+
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_tipo.png"))); // NOI18N
+        jMenuItem8.setText("Manejo de productos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        mnuLogistica.add(jMenuItem8);
+
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_producto.png"))); // NOI18N
+        jMenuItem9.setText("Ordenes de pedido");
+        mnuLogistica.add(jMenuItem9);
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_informacion.png"))); // NOI18N
+        jMenuItem10.setText("Solicitudes a logística");
+        mnuLogistica.add(jMenuItem10);
+
         barraMenu.add(mnuLogistica);
 
         setJMenuBar(barraMenu);
@@ -296,6 +368,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarSesion1ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        ManejadorServicios manejadorServicios = new ManejadorServicios();
+        panelEscritorio.add(manejadorServicios);
+        manejadorServicios.setVisible(true);   
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        ManejadorProductos manejadorProductos = new ManejadorProductos();
+        panelEscritorio.add(manejadorProductos);
+        manejadorProductos.setVisible(true);           
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        MisServicios misServicios = new MisServicios();
+        panelEscritorio.add(misServicios);
+        misServicios.setVisible(true);          
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnCerrarSesion;
@@ -308,9 +401,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkPermisoRecepcionista;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblFuncionarioConectado;
     private javax.swing.JMenu mnuAdministracion;
