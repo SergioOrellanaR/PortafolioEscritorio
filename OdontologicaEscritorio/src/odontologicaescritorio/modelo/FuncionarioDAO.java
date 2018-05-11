@@ -25,10 +25,11 @@ public class FuncionarioDAO implements DatosConexion{
     private int telefono;
     private String email;
     private String comuna;
+    private String ciudad;
 
     public FuncionarioDAO(){};
-    
-    public FuncionarioDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna) {
+
+    public FuncionarioDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -41,6 +42,7 @@ public class FuncionarioDAO implements DatosConexion{
         this.telefono = telefono;
         this.email = email;
         this.comuna = comuna;
+        this.ciudad = ciudad;
     }
 
     public int getRut() {
@@ -138,6 +140,16 @@ public class FuncionarioDAO implements DatosConexion{
     public void setComuna(String comuna) {
         this.comuna = comuna;
     }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+    
+    
     
     public FuncionarioDTO obtenerFuncionarioBD(int rut){
         try{
@@ -161,11 +173,11 @@ public class FuncionarioDAO implements DatosConexion{
             }
             conexion.close();
             System.out.println("FUNCIONARIO CARGADO EN DAO: " + this.getRut());
-            return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna());
+            return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
         }catch(Exception e){
             System.out.println("Error en obtención de funcionario desde BD: " + e);
         }
-        return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna());
+        return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
     }
 
     public ArrayList<FuncionarioDTO> obtenerTodosLosFuncionariosBD(){
@@ -188,7 +200,7 @@ public class FuncionarioDAO implements DatosConexion{
                 this.setTelefono(resultado.getInt(10));
                 this.setEmail(resultado.getString(11));
                 this.setComuna(resultado.getString(12));
-                listaFuncionarios.add(new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna()));
+                listaFuncionarios.add(new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad()));
             }  
             conexion.close();
             return listaFuncionarios;

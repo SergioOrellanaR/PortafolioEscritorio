@@ -152,7 +152,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         txtDia = new javax.swing.JTextField();
         cboMes = new javax.swing.JComboBox<>();
         txtAno = new javax.swing.JTextField();
-        jButton10 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         cboTipoFuncionario = new javax.swing.JComboBox<>();
         lblModo = new javax.swing.JLabel();
@@ -377,8 +377,9 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
 
         txtAno.setEditable(false);
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
-        jButton10.setText("Cancelar");
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
 
         jLabel18.setText("Tipo de funcionario:");
 
@@ -462,7 +463,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                                 .addGroup(pnlDatosPacienteLayout.createSequentialGroup()
                                     .addComponent(btnEditarDatosPaciente)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlDatosPacienteLayout.createSequentialGroup()
                         .addComponent(lblModo, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -471,9 +472,9 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         pnlDatosPacienteLayout.setVerticalGroup(
             pnlDatosPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDatosPacienteLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(lblModo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDatosPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -534,8 +535,8 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDatosPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarDatosPaciente)
-                    .addComponent(jButton10))
-                .addGap(30, 30, 30))
+                    .addComponent(btnCancelar))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         tbDatosPersonas.addTab("Datos de la persona", pnlDatosPaciente);
@@ -569,7 +570,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         );
         pnlBitacoraPacienteLayout.setVerticalGroup(
             pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 504, Short.MAX_VALUE)
         );
 
         tbDatosPersonas.addTab("Bitácora de atenciones", pnlBitacoraPaciente);
@@ -591,7 +592,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tbDatosPersonas)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -603,7 +604,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
         );
 
         pack();
@@ -651,7 +652,10 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                         if(paciente.getSexo() == 'M' || paciente.getSexo() == 'm') cboSexo.setSelectedIndex(0);
                         if(paciente.getSexo() == 'F' || paciente.getSexo() == 'f') cboSexo.setSelectedIndex(1);
                         if(paciente.getSexo() != 'M' && paciente.getSexo() != 'm' && paciente.getSexo() != 'F' && paciente.getSexo() != 'f') cboSexo.setSelectedIndex(3);
-
+                        //Obtener la fecha de nacimiento
+                        txtDia.setText(String.valueOf(paciente.getF_nacimiento().getDayOfMonth()));
+                        txtAno.setText(String.valueOf(paciente.getF_nacimiento().getYear()));
+                        cboMes.setSelectedIndex(paciente.getF_nacimiento().getMonthValue() - 1);
                     }
                 }
                 break;
@@ -682,8 +686,9 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
     private void btnEditarDatosPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosPacienteActionPerformed
         // TODO add your handling code here:
         if(!estaEditando){
+            btnCancelar.setEnabled(true);
             lblModo.setText("Usted está en modo edición.");
-            btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+            lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
             estaEditando = true;
             txtRUT.setEditable(true);
             txtPNombre.setEditable(true);
@@ -704,8 +709,11 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
             btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
             btnEditarDatosPaciente.setText("Guardar cambios");
         }else{
+            if(validarFormularios()){
+                JOptionPane.showMessageDialog(rootPane, "Se ha registrado correctamente al paciente.", "Registro completado", HEIGHT);
+            }
             lblModo.setText("Usted está en modo vista.");
-            btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));            
+            lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));            
             estaEditando = false;
             txtRUT.setEditable(false);
             txtPNombre.setEditable(false);
@@ -728,6 +736,108 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEditarDatosPacienteActionPerformed
 
+    private boolean validarFormularios(){
+        if(txtRUT.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "El RUT no puede estar vacío.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }
+        try{
+            Integer.parseInt(txtRUT.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "El campo de RUT solo admite números.", "Ha ingresado mal un dato", HEIGHT);
+            return false;            
+        }
+        if(txtPNombre.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "El primer nombre no debe estar vacío.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }
+        if(txtPApellido.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "El primer apellido no debe estar vacío.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }      
+        if(txtDireccion.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "La dirección no debe estar vacía.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }   
+        if(txtTelefono.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "El teléfono no debe estar vacío.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }
+        try{
+            Integer.parseInt(txtTelefono.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "El campo de Teléfono solo admite números.", "Ha ingresado mal un dato", HEIGHT);
+            return false;            
+        }        
+        if(txtDia.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "El día de nacimiento no debe estar vacío.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }
+        if(txtAno.getText().length() == 0){
+            JOptionPane.showMessageDialog(rootPane, "El año de nacimiento no debe estar vacío.", "Ha ingresado mal un dato", HEIGHT);
+            return false;
+        }
+        if(!validarFecha()){
+            JOptionPane.showMessageDialog(rootPane, "La fecha que usted ha ingresado es inválida", "Ha ingresado mal un dato", HEIGHT);
+            return false;            
+        }
+        return true;          
+    }
+    
+    private boolean validarFecha(){
+        int dia;
+        int ano;
+        int mes = Integer.parseInt(String.valueOf(cboMes.getSelectedItem()).substring(0, 2));
+        boolean biciesto = false;
+        int anoActual = java.time.Year.now().getValue();
+        
+        try{
+            dia = Integer.parseInt(txtDia.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "El día de nacimiento debe ser un número", "Ha ingresado mal un dato", HEIGHT);
+            return false;            
+        }
+        try{
+            ano = Integer.parseInt(txtAno.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "El año de nacimiento debe ser un número", "Ha ingresado mal un dato", HEIGHT);
+            return false;            
+        }
+        
+        //Validamos que el año sea menor al año actual.
+        if(ano > anoActual){
+            return false;
+        }
+        
+        //Validamos que el año sea biciesto.
+        if((ano % 400) == 0){
+            biciesto = true;
+        }else{
+            if((ano % 100) != 0 && (ano % 4) == 0){
+                biciesto = true;
+            }
+        }
+        
+        //Validamos que los días sean coherentes con el mes.
+        if(mes == 1 || mes == 3 || mes == 5|| mes == 7|| mes == 8|| mes == 10|| mes == 12){
+            if(dia >= 1 && dia <= 31){
+                return true;
+            }
+        }else{
+            if(mes == 4 || mes == 6 || mes == 9|| mes == 11){
+                if(dia >= 1 && dia <= 30){
+                    return true;
+                }                
+            }else{
+                if(mes == 2){
+                    if(biciesto && (dia >= 1 && dia <= 29)) return true;
+                    if(!biciesto && (dia >= 1 && dia <= 28)) return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     private void txtSNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSNombreActionPerformed
@@ -747,6 +857,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarRUT;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCargarFichaPaciente;
     private javax.swing.JButton btnEditarDatosPaciente;
     private javax.swing.JButton btnRegistrarPaciente;
@@ -756,7 +867,6 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cboMes;
     private javax.swing.JComboBox<String> cboSexo;
     private javax.swing.JComboBox<String> cboTipoFuncionario;
-    private javax.swing.JButton jButton10;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

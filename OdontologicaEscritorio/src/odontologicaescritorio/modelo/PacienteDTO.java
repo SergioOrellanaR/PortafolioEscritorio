@@ -23,8 +23,9 @@ public class PacienteDTO {
     private int telefono;
     private String email;
     private String comuna;
+    private String ciudad;
 
-    public PacienteDTO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna) {
+    public PacienteDTO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -37,6 +38,7 @@ public class PacienteDTO {
         this.telefono = telefono;
         this.email = email;
         this.comuna = comuna;
+        this.ciudad = ciudad;
     }
 
     public int getRut() {
@@ -134,4 +136,14 @@ public class PacienteDTO {
     public void setComuna(String comuna) {
         this.comuna = comuna;
     }    
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+    
+    
 }

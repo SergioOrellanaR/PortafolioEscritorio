@@ -24,10 +24,11 @@ public class PacienteDAO implements DatosConexion{
     private int telefono;
     private String email;
     private String comuna;
+    private String ciudad;
 
     public PacienteDAO(){};
-    
-    public PacienteDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna) {
+
+    public PacienteDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -40,6 +41,7 @@ public class PacienteDAO implements DatosConexion{
         this.telefono = telefono;
         this.email = email;
         this.comuna = comuna;
+        this.ciudad = ciudad;
     }
 
     public int getRut() {
@@ -137,6 +139,14 @@ public class PacienteDAO implements DatosConexion{
     public void setComuna(String comuna) {
         this.comuna = comuna;
     }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
     
     public ArrayList<PacienteDTO> obtenerTodosLosPacientesBD(){
         ArrayList<PacienteDTO> listaPacientes = new ArrayList<PacienteDTO>();
@@ -144,7 +154,7 @@ public class PacienteDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA FROM CLIENTE JOIN PERSONA ON (CLIENTE.RUT = PERSONA.RUT)");
+            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE FROM CLIENTE JOIN PERSONA ON (CLIENTE.RUT = PERSONA.RUT) JOIN COMUNA ON (PERSONA.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID)");
             while (resultado.next()) {
                 this.setRut(resultado.getInt(1));
                 this.setDv(resultado.getString(2).charAt(0));
@@ -158,13 +168,31 @@ public class PacienteDAO implements DatosConexion{
                 this.setTelefono(resultado.getInt(10));
                 this.setEmail(resultado.getString(11));
                 this.setComuna(resultado.getString(12));
-                listaPacientes.add(new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna()));
+                this.setCiudad(resultado.getString(13));
+                listaPacientes.add(new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad()));
             }  
             conexion.close();
             return listaPacientes;
         }catch(Exception e){
             System.out.println("Error : " + e);
             return listaPacientes;
+        }
+    }
+    
+    public String registrarPacienteBD(){
+        int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            //Statement declaracion = conexion.createStatement();
+            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )}");
+            procedimientoAlmacenado.execute();
+            //declaracion.executeUpdate("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
+            conexion.close();
+            return "El registro en la base de datos fue exitoso.";
+        }catch(Exception e){
+            System.out.println("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
+            return "Error en registro de paciente: " + e;
         }
     }
 }

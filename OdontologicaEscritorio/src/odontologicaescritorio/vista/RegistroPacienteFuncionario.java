@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import java.time.LocalDate;
+import odontologicaescritorio.controlador.*;
 
 import javax.swing.JOptionPane;
 
@@ -71,7 +73,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         txtAno = new javax.swing.JTextField();
         txtDia = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        cboComuna1 = new javax.swing.JComboBox<>();
+        cboCiudad = new javax.swing.JComboBox<>();
         btnFinalizarRegistroPaciente = new javax.swing.JButton();
         jLabel33 = new javax.swing.JLabel();
         panelTipoFuncionario = new javax.swing.JPanel();
@@ -114,7 +116,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Comuna:");
 
-        cboComuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboComuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - COMUNA" }));
 
         jLabel10.setText("Dirección:");
 
@@ -156,7 +158,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Ciudad:");
 
-        cboComuna1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - CIUDAD" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -212,7 +214,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboComuna1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +284,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(4, 4, 4)
-                        .addComponent(cboComuna1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cboCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -365,14 +367,13 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 445, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(296, 296, 296)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
                         .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFinalizarRegistroPaciente)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnFinalizarRegistroPaciente)))
                 .addContainerGap())
         );
 
@@ -396,8 +397,22 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
     private void btnFinalizarRegistroPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarRegistroPacienteActionPerformed
         //Validar que los formularios no estén vacíos
-        if(validarFormularios()){
-            JOptionPane.showMessageDialog(rootPane, "OK", "OK", HEIGHT);
+        switch(tipoRegistro){
+            case 0:
+                break;
+            case 1:
+                if(validarFormularios()){
+                    LocalDate fechaNacimiento = LocalDate.of(
+                            Integer.parseInt(txtAno.getText()),
+                            Integer.parseInt(String.valueOf(cboMes.getSelectedItem()).split(" ")[0]),
+                            Integer.parseInt(txtDia.getText()));
+                    char sexo = String.valueOf(cboSexo.getSelectedItem()).charAt(0);          
+                    JOptionPane.showMessageDialog(rootPane,
+                            new Registro().registrarPacienteYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()))
+                            ,
+                            "Registro completado", HEIGHT);
+                }
+                break;
         }
     }//GEN-LAST:event_btnFinalizarRegistroPacienteActionPerformed
 
@@ -505,8 +520,8 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizarRegistroPaciente;
+    private javax.swing.JComboBox<String> cboCiudad;
     private javax.swing.JComboBox<String> cboComuna;
-    private javax.swing.JComboBox<String> cboComuna1;
     private javax.swing.JComboBox<String> cboDV;
     private javax.swing.JComboBox<String> cboMes;
     private javax.swing.JComboBox<String> cboSexo;

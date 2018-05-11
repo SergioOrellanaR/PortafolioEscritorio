@@ -36,7 +36,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="554" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="558" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -72,7 +72,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="tbDatosPersonas" max="32767" attributes="0"/>
-                      <Component id="jPanel6" pref="532" max="32767" attributes="0"/>
+                      <Component id="jPanel6" pref="536" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -378,7 +378,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="btnEditarDatosPaciente" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton10" min="-2" pref="165" max="-2" attributes="0"/>
+                                              <Component id="btnCancelar" min="-2" pref="165" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -395,9 +395,9 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblModo" min="-2" pref="24" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -469,9 +469,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnEditarDatosPaciente" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton10" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <EmptySpace pref="48" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -747,12 +747,13 @@
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton10">
+                <Component class="javax.swing.JButton" name="btnCancelar">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_cancelar.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Cancelar"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel18">
@@ -843,7 +844,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="500" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="504" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
