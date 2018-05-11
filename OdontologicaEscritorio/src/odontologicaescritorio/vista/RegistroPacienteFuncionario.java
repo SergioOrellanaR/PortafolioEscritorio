@@ -29,6 +29,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         //Si el modo de registro es 1 (paciente), esconder controles de funcionario.
         if(tipoRegistro == 1){
             panelTipoFuncionario.setVisible(false);
+            lblNoticiaFun.setVisible(false);
         }
     }
 
@@ -74,6 +75,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         txtDia = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         cboCiudad = new javax.swing.JComboBox<>();
+        lblNoticiaFun = new javax.swing.JLabel();
         btnFinalizarRegistroPaciente = new javax.swing.JButton();
         jLabel33 = new javax.swing.JLabel();
         panelTipoFuncionario = new javax.swing.JPanel();
@@ -160,6 +162,12 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
         cboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - CIUDAD" }));
 
+        lblNoticiaFun.setBackground(new java.awt.Color(255, 102, 102));
+        lblNoticiaFun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_advertencia.png"))); // NOI18N
+        lblNoticiaFun.setText("¡IMPORTANTE: Luego de registrar al funcionario, debe darle permisos a su usuario!");
+        lblNoticiaFun.setIconTextGap(0);
+        lblNoticiaFun.setOpaque(true);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -225,7 +233,8 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtDireccion))))
+                            .addComponent(txtDireccion)))
+                    .addComponent(lblNoticiaFun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -297,7 +306,9 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(484, 484, 484))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNoticiaFun, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(454, 454, 454))
         );
 
         btnFinalizarRegistroPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png"))); // NOI18N
@@ -325,7 +336,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         jLabel17.setIconTextGap(0);
         jLabel17.setOpaque(true);
 
-        cboTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - TIPOFUNCIONARIO" }));
 
         javax.swing.GroupLayout panelTipoFuncionarioLayout = new javax.swing.GroupLayout(panelTipoFuncionario);
         panelTipoFuncionario.setLayout(panelTipoFuncionarioLayout);
@@ -399,6 +410,17 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         //Validar que los formularios no estén vacíos
         switch(tipoRegistro){
             case 0:
+                if(validarFormularios()){
+                    LocalDate fechaNacimiento = LocalDate.of(
+                            Integer.parseInt(txtAno.getText()),
+                            Integer.parseInt(String.valueOf(cboMes.getSelectedItem()).split(" ")[0]),
+                            Integer.parseInt(txtDia.getText()));
+                    char sexo = String.valueOf(cboSexo.getSelectedItem()).charAt(0);          
+                    JOptionPane.showMessageDialog(rootPane,
+                            new Registro().registrarFuncionarioYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()), String.valueOf(cboTipoFuncionario.getSelectedItem()))
+                            ,
+                            "Registro completado", HEIGHT);
+                }                
                 break;
             case 1:
                 if(validarFormularios()){
@@ -546,6 +568,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblNoticiaFun;
     private javax.swing.JPanel panelTipoFuncionario;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtDia;

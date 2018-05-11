@@ -26,10 +26,11 @@ public class FuncionarioDAO implements DatosConexion{
     private String email;
     private String comuna;
     private String ciudad;
+    private String tipoFuncionario;
 
     public FuncionarioDAO(){};
 
-    public FuncionarioDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
+    public FuncionarioDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad, String tipoFuncionario) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -43,6 +44,7 @@ public class FuncionarioDAO implements DatosConexion{
         this.email = email;
         this.comuna = comuna;
         this.ciudad = ciudad;
+        this.tipoFuncionario = tipoFuncionario;
     }
 
     public int getRut() {
@@ -148,15 +150,21 @@ public class FuncionarioDAO implements DatosConexion{
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
-    
-    
+
+    public String getTipoFuncionario() {
+        return tipoFuncionario;
+    }
+
+    public void setTipoFuncionario(String tipoFuncionario) {
+        this.tipoFuncionario = tipoFuncionario;
+    }
     
     public FuncionarioDTO obtenerFuncionarioBD(int rut){
         try{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT FUNCIONARIO.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA FROM FUNCIONARIO JOIN PERSONA ON (FUNCIONARIO.RUT = PERSONA.RUT) WHERE FUNCIONARIO.RUT = " + rut);
+            ResultSet resultado = declaracion.executeQuery("SELECT FUNCIONARIO.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE, FUNCIONARIO.ID_TIPO || ' - ' || TIPO_FUNCIONARIO.DESCRIPCION FROM FUNCIONARIO JOIN PERSONA ON (FUNCIONARIO.RUT = PERSONA.RUT) JOIN COMUNA ON (PERSONA.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID) JOIN TIPO_FUNCIONARIO ON (TIPO_FUNCIONARIO.ID = FUNCIONARIO.ID_TIPO) WHERE FUNCIONARIO.RUT = " + rut);
             while (resultado.next()) {
                 this.setRut(resultado.getInt(1));
                 this.setDv(resultado.getString(2).charAt(0));
@@ -173,11 +181,11 @@ public class FuncionarioDAO implements DatosConexion{
             }
             conexion.close();
             System.out.println("FUNCIONARIO CARGADO EN DAO: " + this.getRut());
-            return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
+            return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getTipoFuncionario());
         }catch(Exception e){
             System.out.println("Error en obtención de funcionario desde BD: " + e);
         }
-        return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
+        return new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getTipoFuncionario());
     }
 
     public ArrayList<FuncionarioDTO> obtenerTodosLosFuncionariosBD(){
@@ -186,7 +194,7 @@ public class FuncionarioDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT FUNCIONARIO.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA FROM FUNCIONARIO JOIN PERSONA ON (FUNCIONARIO.RUT = PERSONA.RUT)");
+            ResultSet resultado = declaracion.executeQuery("SELECT FUNCIONARIO.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE, FUNCIONARIO.ID_TIPO || ' - ' || TIPO_FUNCIONARIO.DESCRIPCION FROM FUNCIONARIO JOIN PERSONA ON (FUNCIONARIO.RUT = PERSONA.RUT) JOIN COMUNA ON (PERSONA.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID) JOIN TIPO_FUNCIONARIO ON (TIPO_FUNCIONARIO.ID = FUNCIONARIO.ID_TIPO)");
             while (resultado.next()) {
                 this.setRut(resultado.getInt(1));
                 this.setDv(resultado.getString(2).charAt(0));
@@ -200,7 +208,9 @@ public class FuncionarioDAO implements DatosConexion{
                 this.setTelefono(resultado.getInt(10));
                 this.setEmail(resultado.getString(11));
                 this.setComuna(resultado.getString(12));
-                listaFuncionarios.add(new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad()));
+                this.setCiudad(resultado.getString(13));
+                this.setTipoFuncionario(resultado.getString(14));
+                listaFuncionarios.add(new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getTipoFuncionario()));
             }  
             conexion.close();
             return listaFuncionarios;
@@ -208,6 +218,23 @@ public class FuncionarioDAO implements DatosConexion{
             System.out.println("Error : " + e);
             return listaFuncionarios;
         }
+        
     }    
     
+    public String registrarFuncionarioBD(){
+        int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);
+        int idTipoFuncionario = Integer.parseInt(this.getTipoFuncionario().split(" ")[0]);
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            //Statement declaracion = conexion.createStatement();
+            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_FUNCYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + "," + idTipoFuncionario + ")}");
+            procedimientoAlmacenado.execute();
+            //declaracion.executeUpdate("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
+            conexion.close();
+            return "El registro del funcionario y su usuario en la base de datos fue exitoso.";
+        }catch(Exception e){
+            return "Error en registro de paciente: " + e;
+        }
+    }    
 }

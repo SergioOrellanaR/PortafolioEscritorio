@@ -25,8 +25,9 @@ public class FuncionarioDTO {
     private String email;
     private String comuna;
     private String ciudad;
+    private String tipoFuncionario;
 
-    public FuncionarioDTO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
+    public FuncionarioDTO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad, String tipoFuncionario) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -40,6 +41,7 @@ public class FuncionarioDTO {
         this.email = email;
         this.comuna = comuna;
         this.ciudad = ciudad;
+        this.tipoFuncionario = tipoFuncionario;
     }
 
     public int getRut() {
@@ -145,5 +147,12 @@ public class FuncionarioDTO {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }    
-    
+
+    public String getTipoFuncionario() {
+        return tipoFuncionario;
+    }
+
+    public void setTipoFuncionario(String tipoFuncionario) {
+        this.tipoFuncionario = tipoFuncionario;
+    }
 }
