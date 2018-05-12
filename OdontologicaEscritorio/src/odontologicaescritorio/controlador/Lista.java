@@ -24,4 +24,14 @@ public class Lista {
         ArrayList<UsuarioDTO> listaUsuarios = new UsuarioDAO().obtenerTodosLosUsuariosBD();
         return listaUsuarios;
     }
+    
+    public ArrayList<ComunaDTO> listarComunas(int idCiudad){
+        ArrayList<ComunaDTO> listaComunas = new ComunaDAO().obtenerTodasLasComunasPorCiudadBD(idCiudad);
+        return listaComunas;
+    }
+    
+    public ArrayList<CiudadDTO> listarCiudades(){
+        ArrayList<CiudadDTO> listaCiudades = new CiudadDAO().obtenerTodasLasCiudadesBD();
+        return listaCiudades;
+    }    
 }

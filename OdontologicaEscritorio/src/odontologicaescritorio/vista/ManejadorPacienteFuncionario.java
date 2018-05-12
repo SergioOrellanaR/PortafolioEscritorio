@@ -30,6 +30,8 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
     // 1 - Se están manejando personas de tipo paciente.
     public ManejadorPacienteFuncionario(int nivelAcceso, int modoManejador) {
         initComponents();
+        poblarCboCiudades();
+        poblarCboComunas();
         
         this.nivelAcceso = nivelAcceso;
         this.modoManejador = modoManejador;
@@ -69,6 +71,19 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 this.setTitle("Manejo de pacientes");
                 actualizarListaPacientes();
                 break;
+        }
+    }
+    
+    public void poblarCboCiudades(){
+        for(CiudadDTO ciudad : new Lista().listarCiudades()){
+            cboCiudad.addItem(ciudad.getIdNombre());
+        }        
+    }
+    
+    public void poblarCboComunas(){
+        int idCiudad = Integer.parseInt(String.valueOf(cboCiudad.getSelectedItem()).split(" ")[0]);
+        for(ComunaDTO comuna : new Lista().listarComunas(idCiudad)){
+            cboComuna.addItem(comuna.getIdNombre());
         }
     }
     
@@ -358,7 +373,6 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Comuna:");
 
-        cboComuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboComuna.setEnabled(false);
 
         jLabel12.setText("-");
@@ -367,7 +381,6 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
 
         jLabel16.setText("Comuna:");
 
-        cboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboCiudad.setEnabled(false);
 
         jLabel17.setText("Fecha de nacimiento:");
@@ -595,7 +608,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tbDatosPersonas)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -607,7 +620,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
         );
 
         pack();
