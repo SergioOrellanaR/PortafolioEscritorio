@@ -194,4 +194,51 @@ public class PacienteDAO implements DatosConexion{
             return "Error en registro de paciente: " + e;
         }
     }
+    
+    public int buscarPacienteBD(int rut){
+        int contador = 0;
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            ResultSet resultado = declaracion.executeQuery("SELECT COUNT(CLIENTE.RUT) FROM CLIENTE WHERE CLIENTE.RUT = " + rut);
+            while (resultado.next()) {
+                contador = resultado.getInt(1);
+            }  
+            conexion.close();
+            return contador;
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return contador;
+        }
+    }
+
+    public PacienteDTO obtenerPacienteBD(int rut){
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE FROM CLIENTE JOIN PERSONA ON (CLIENTE.RUT = PERSONA.RUT) JOIN COMUNA ON (PERSONA.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID)");
+            while (resultado.next()) {
+                this.setRut(resultado.getInt(1));
+                this.setDv(resultado.getString(2).charAt(0));
+                this.setP_nombre(resultado.getString(3));
+                this.setS_nombre(resultado.getString(4));
+                this.setP_apellido(resultado.getString(5));
+                this.setS_apellido(resultado.getString(6));
+                this.setF_nacimiento(LocalDate.parse(resultado.getString(7)));
+                this.setSexo(resultado.getString(8).charAt(0));
+                this.setDireccion(resultado.getString(9));
+                this.setTelefono(resultado.getInt(10));
+                this.setEmail(resultado.getString(11));
+                this.setComuna(resultado.getString(12));
+                this.setCiudad(resultado.getString(13));
+            }  
+            conexion.close();
+            return new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
+        }
+    }    
 }

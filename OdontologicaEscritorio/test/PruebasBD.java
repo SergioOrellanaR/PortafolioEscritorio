@@ -44,8 +44,14 @@ public class PruebasBD {
     //
     // @Test
     // public void hello() {}
+//    @Test
+//    public void pruebaRegistrarServicioBD(){
+//        System.out.println(new Registro().registrarServicioBD("SERVICIO PRUEBA", 0));
+//    }
     @Test
-    public void pruebaRegistrarServicioBD(){
-        System.out.println(new Registro().registrarServicioBD("SERVICIO PRUEBA", 0));
+    public void pruebaBuscarPacienteBD(){
+        System.out.println(new Consulta().buscarPaciente(18984598));
     }
+    
+    
 }

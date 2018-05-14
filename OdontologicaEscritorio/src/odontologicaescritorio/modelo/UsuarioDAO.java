@@ -179,4 +179,17 @@ public class UsuarioDAO implements DatosConexion{
         return validacion;
     }
     
+    public String modificarPermisos(int id, int administrador, int odontologo, int recepcionista, int bodega, int cliente){
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_CONF_PERMISOS (" + id + "," + administrador + "," + odontologo + "," + recepcionista + "," + bodega + "," + cliente + ")}");
+            procedimientoAlmacenado.execute();
+            conexion.close();
+            return "Se han modificado correctamente los permisos del usuario";
+        }catch(Exception e){
+            return "Error en modificación de permisos de usuario: " + e;
+        }        
+    }
+    
 }

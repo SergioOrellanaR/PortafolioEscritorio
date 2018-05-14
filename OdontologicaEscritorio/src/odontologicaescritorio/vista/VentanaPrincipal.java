@@ -91,6 +91,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem11 = new javax.swing.JMenuItem();
         mnuRecepcion = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
         mnuLogistica = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -295,6 +297,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuRecepcion.add(jMenuItem1);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenu3.setText("Boletas de servicio");
+
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem12.setText("Emitir boleta de servicio");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem12);
+
+        mnuRecepcion.add(jMenu3);
+
         barraMenu.add(mnuRecepcion);
 
         mnuLogistica.setText("Módulo de logística");
@@ -389,6 +405,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         misServicios.setVisible(true);          
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        EmisorBoletaServicio emisorBoletaServicio = new EmisorBoletaServicio();
+        panelEscritorio.add(emisorBoletaServicio);
+        emisorBoletaServicio.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnCerrarSesion;
@@ -403,9 +425,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

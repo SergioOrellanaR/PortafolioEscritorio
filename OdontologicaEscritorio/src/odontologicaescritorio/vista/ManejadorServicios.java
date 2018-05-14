@@ -27,7 +27,7 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
     
     public void actualizarListaServicios(){
         listaServicios = new Lista().listarServicios();
-        String[] columnas = {"ID","Nombre", "Precio"};
+        String[] columnas = {"ID","Nombre", "Valor"};
         DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
         
         for(ServicioDTO servicio : listaServicios){

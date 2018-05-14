@@ -19,4 +19,12 @@ public class Consulta {
     public int validarUsuario(String nombre, String clave){
         return new UsuarioDAO().validarUsuarioBD(nombre, clave);
     }     
+    
+    public int buscarPaciente(int rut){
+        return new PacienteDAO().buscarPacienteBD(rut);
+    }
+    
+    public PacienteDTO obtenerPaciente(int rut){
+        return new PacienteDAO().obtenerPacienteBD(rut);
+    }
 }

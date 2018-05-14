@@ -21,6 +21,11 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
      * Creates new form ManejadorUsuarios
      */
     ArrayList<UsuarioDTO> listaUsuarios;
+    int permisoAdministrador = 0;
+    int permisoOdontologo = 0;
+    int permisoRecepcionista = 0;
+    int permisoLogistica = 0;
+    int permisoCliente = 0;
     public ManejadorUsuarios() {
         initComponents();
         actualizarListaUsuarios();
@@ -78,7 +83,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
         btnEditarUsuario = new javax.swing.JButton();
         lblRutPersona = new javax.swing.JLabel();
         lblIdUsuario = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
+        btnCancelarEdicion = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -255,8 +260,13 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
 
         lblIdUsuario.setText("-");
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
-        jButton10.setText("Cancelar");
+        btnCancelarEdicion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
+        btnCancelarEdicion.setText("Cancelar");
+        btnCancelarEdicion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarEdicionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -292,7 +302,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
                             .addComponent(chkUsuarioCliente)
                             .addComponent(chkUsuarioLogistica)))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelarEdicion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditarUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(chkUsuarioRecepcionista, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -339,7 +349,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEditarUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton10)
+                .addComponent(btnCancelarEdicion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -359,7 +369,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -409,18 +419,23 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
                 switch(permiso){
                     case 0:
                         chkUsuarioAdministrador.setSelected(true);
+                        permisoAdministrador = 1;
                         break;
                     case 1:
                         chkUsuarioOdontologo.setSelected(true);
+                        permisoOdontologo = 1;
                         break;
                     case 2:
                         chkUsuarioRecepcionista.setSelected(true);
+                        permisoRecepcionista = 1;
                         break;
                     case 3:
                         chkUsuarioLogistica.setSelected(true);
+                        permisoLogistica = 1;
                         break;
                     case 4:
                         chkUsuarioCliente.setSelected(true);
+                        permisoCliente = 1;
                         break;
                     }
                 }
@@ -432,7 +447,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
     private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
         if(!estaEditando){
             estaEditando = true;
-            txtNombreUsuario.setEditable(true);
+            //txtNombreUsuario.setEditable(true);
             btnReiniciarClave.setEnabled(true);
             chkUsuarioAdministrador.setEnabled(true);
             chkUsuarioOdontologo.setEnabled(true);
@@ -447,7 +462,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
             btnEditarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
         }else{
             estaEditando = false;
-            txtNombreUsuario.setEditable(false);
+            //txtNombreUsuario.setEditable(false);
             btnReiniciarClave.setEnabled(false);
             chkUsuarioAdministrador.setEnabled(false);
             chkUsuarioOdontologo.setEnabled(false);
@@ -460,13 +475,39 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
             btnBuscarRUT.setEnabled(true);
             txtRutBusqueda.setEditable(true);
             btnEditarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+            //obtener variables de permiso
+            if(chkUsuarioAdministrador.isSelected()) permisoAdministrador = 1; else permisoAdministrador = 0;
+            if(chkUsuarioOdontologo.isSelected()) permisoOdontologo = 1; else permisoOdontologo = 0;
+            if(chkUsuarioRecepcionista.isSelected()) permisoRecepcionista = 1; else permisoRecepcionista = 0;
+            if(chkUsuarioLogistica.isSelected()) permisoLogistica = 1; else permisoLogistica = 0;
+            if(chkUsuarioCliente.isSelected()) permisoCliente = 1; else permisoCliente = 0;
+            JOptionPane.showMessageDialog(rootPane, new Actualizacion().actualizarPermisosUsuario(Integer.parseInt(lblIdUsuario.getText()), permisoAdministrador, permisoOdontologo, permisoRecepcionista, permisoLogistica, permisoCliente), "Modificación de permisos", HEIGHT);
+            actualizarListaUsuarios();
         }
 
     }//GEN-LAST:event_btnEditarUsuarioActionPerformed
 
+    private void btnCancelarEdicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarEdicionActionPerformed
+            estaEditando = false;
+            //txtNombreUsuario.setEditable(false);
+            btnReiniciarClave.setEnabled(false);
+            chkUsuarioAdministrador.setEnabled(false);
+            chkUsuarioOdontologo.setEnabled(false);
+            chkUsuarioRecepcionista.setEnabled(false);
+            chkUsuarioLogistica.setEnabled(false);
+            chkUsuarioCliente.setEnabled(false);  
+            btnEditarUsuario.setText("Editar datos del usuario");
+            tblPacientes.setEnabled(true);
+            btnVerUsuario.setEnabled(true);        
+            btnBuscarRUT.setEnabled(true);
+            txtRutBusqueda.setEditable(true);
+            btnEditarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+    }//GEN-LAST:event_btnCancelarEdicionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarRUT;
+    private javax.swing.JButton btnCancelarEdicion;
     private javax.swing.JButton btnEditarUsuario;
     private javax.swing.JButton btnReiniciarClave;
     private javax.swing.JButton btnVerUsuario;
@@ -475,7 +516,6 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JCheckBox chkUsuarioLogistica;
     private javax.swing.JCheckBox chkUsuarioOdontologo;
     private javax.swing.JCheckBox chkUsuarioRecepcionista;
-    private javax.swing.JButton jButton10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
