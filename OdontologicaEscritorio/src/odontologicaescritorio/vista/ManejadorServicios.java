@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import odontologicaescritorio.modelo.*;
+import odontologicaescritorio.controlador.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,8 +19,25 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
     /**
      * Creates new form ManejadorServicios
      */
+    ArrayList<ServicioDTO> listaServicios;
     public ManejadorServicios() {
         initComponents();
+        actualizarListaServicios();
+    }
+    
+    public void actualizarListaServicios(){
+        listaServicios = new Lista().listarServicios();
+        String[] columnas = {"ID","Nombre", "Precio"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        
+        for(ServicioDTO servicio : listaServicios){
+            String id       = String.valueOf(servicio.getId());
+            String nombre   = String.valueOf(servicio.getDescripcion());
+            String precio   = String.valueOf(servicio.getPrecio());
+            Object[] elemento = {id, nombre, precio};
+            modeloTabla.addRow(elemento);
+        };
+        tblServicios.setModel(modeloTabla);        
     }
 
     /**
@@ -29,7 +51,7 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
 
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblProductos = new javax.swing.JTable();
+        tblServicios = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         btnCargarServicio = new javax.swing.JButton();
         btnRegistrarServicio = new javax.swing.JButton();
@@ -40,7 +62,7 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txtNombreServicio = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtPrecioCompra = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         lblIdServicio = new javax.swing.JLabel();
         lblModo = new javax.swing.JLabel();
         btnEditarDatosServicios = new javax.swing.JButton();
@@ -56,8 +78,8 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
         jPanel6.setBackground(new java.awt.Color(218, 210, 226));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tblProductos.setBackground(new java.awt.Color(255, 255, 153));
-        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+        tblServicios.setBackground(new java.awt.Color(255, 255, 153));
+        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -68,7 +90,7 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(tblProductos);
+        jScrollPane3.setViewportView(tblServicios);
 
         jLabel14.setBackground(new java.awt.Color(146, 128, 183));
         jLabel14.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
@@ -78,9 +100,19 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
 
         btnCargarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cargarficha.png"))); // NOI18N
         btnCargarServicio.setText("Cargar ficha de servicio");
+        btnCargarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarServicioActionPerformed(evt);
+            }
+        });
 
         btnRegistrarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png"))); // NOI18N
         btnRegistrarServicio.setText("Registrar nuevo servicio");
+        btnRegistrarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarServicioActionPerformed(evt);
+            }
+        });
 
         lblListaPersonas4.setBackground(new java.awt.Color(146, 128, 183));
         lblListaPersonas4.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
@@ -133,7 +165,11 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Nombre del servicio:");
 
+        txtNombreServicio.setEditable(false);
+
         jLabel11.setText("Precio del servicio:");
+
+        txtPrecio.setEditable(false);
 
         lblIdServicio.setText("-");
 
@@ -143,10 +179,22 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
         lblModo.setOpaque(true);
 
         btnEditarDatosServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
-        btnEditarDatosServicios.setText("Editar datos del producto");
+        btnEditarDatosServicios.setText("Editar servicio");
+        btnEditarDatosServicios.setEnabled(false);
+        btnEditarDatosServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarDatosServiciosActionPerformed(evt);
+            }
+        });
 
         btnCancelarServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
         btnCancelarServicio.setText("Cancelar");
+        btnCancelarServicio.setEnabled(false);
+        btnCancelarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarServicioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -158,21 +206,19 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
                     .addComponent(lblListaPersonas3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblModo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblIdServicio))
-                                .addComponent(jLabel10)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel11)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtNombreServicio))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnCancelarServicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEditarDatosServicios, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblIdServicio))
+                            .addComponent(jLabel10)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombreServicio)
+                            .addComponent(btnEditarDatosServicios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelarServicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 179, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -194,7 +240,7 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditarDatosServicios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -226,6 +272,95 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    boolean estaRegistrando = false;
+    private void btnRegistrarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarServicioActionPerformed
+        // TODO add your handling code here:
+        if(!estaRegistrando){
+            lblIdServicio.setText("-");
+            estaRegistrando = true;
+            txtNombreServicio.setEditable(true);
+            txtPrecio.setEditable(true);
+            lblModo.setText("Usted está en modo registro.");
+            btnEditarDatosServicios.setText("Registrar servicio");
+            btnEditarDatosServicios.setEnabled(true);
+            btnEditarDatosServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
+            btnCancelarServicio.setEnabled(true);
+            tblServicios.setEnabled(false);
+            btnRegistrarServicio.setEnabled(false);
+            btnCargarServicio.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnRegistrarServicioActionPerformed
+
+    boolean estaEditando = false;
+    private void btnEditarDatosServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosServiciosActionPerformed
+        if(!estaEditando){
+            estaEditando = true; 
+            txtNombreServicio.setEditable(true);
+            txtPrecio.setEditable(true);
+            btnCancelarServicio.setEnabled(true);
+            tblServicios.setEnabled(false);
+            btnRegistrarServicio.setEnabled(false);
+            btnCargarServicio.setEnabled(false);            
+        }else{
+            estaEditando = false;
+            txtNombreServicio.setEditable(false);
+            txtPrecio.setEditable(false);
+            btnCancelarServicio.setEnabled(false);
+            tblServicios.setEnabled(true);
+            btnRegistrarServicio.setEnabled(true);
+            btnCargarServicio.setEnabled(true);            
+        }
+        //Si está en modo registro, el botón editar se transforma en un boton "registrar".
+        if(estaRegistrando){
+            JOptionPane.showMessageDialog(rootPane, new Registro().registrarServicioBD(txtNombreServicio.getText(), Integer.parseInt(txtPrecio.getText())), "Registro de servicios", HEIGHT);
+            actualizarListaServicios();
+            txtNombreServicio.setText("");
+            txtPrecio.setText("");
+            btnCancelarServicio.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnEditarDatosServiciosActionPerformed
+
+    private void btnCancelarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarServicioActionPerformed
+        // TODO add your handling code here:
+        if(estaRegistrando){
+            estaRegistrando = false;
+            txtNombreServicio.setEditable(false);
+            txtPrecio.setEditable(false);
+            lblModo.setText("Usted está en modo vista.");
+            btnEditarDatosServicios.setText("Editar servicio");
+            btnEditarDatosServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+            btnEditarDatosServicios.setEnabled(false);
+            btnCancelarServicio.setEnabled(false);         
+            tblServicios.setEnabled(true);
+            btnRegistrarServicio.setEnabled(true);
+            btnCargarServicio.setEnabled(true);              
+        }
+        if(estaEditando){
+            estaEditando = false;
+            txtNombreServicio.setEditable(false);
+            txtPrecio.setEditable(false);            
+            lblModo.setText("Usted está en modo vista.");
+            btnEditarDatosServicios.setText("Editar servicio");
+            btnEditarDatosServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+            btnEditarDatosServicios.setEnabled(false);
+            btnCancelarServicio.setEnabled(false);
+            tblServicios.setEnabled(true);
+            btnRegistrarServicio.setEnabled(true);
+            btnCargarServicio.setEnabled(true);              
+        }
+    }//GEN-LAST:event_btnCancelarServicioActionPerformed
+
+    private void btnCargarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarServicioActionPerformed
+        // TODO add your handling code here:
+        int fila = tblServicios.getSelectedRow();
+        int id  = Integer.parseInt(String.valueOf(tblServicios.getValueAt(fila, 0)));
+        String nombre = String.valueOf(tblServicios.getValueAt(fila, 1));
+        int precio = Integer.parseInt(String.valueOf(tblServicios.getValueAt(fila, 2)));
+        txtNombreServicio.setText(nombre);
+        lblIdServicio.setText(String.valueOf(id));
+        txtPrecio.setText(String.valueOf(precio));
+    }//GEN-LAST:event_btnCargarServicioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarServicio;
@@ -243,8 +378,8 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblListaPersonas3;
     private javax.swing.JLabel lblListaPersonas4;
     private javax.swing.JLabel lblModo;
-    private javax.swing.JTable tblProductos;
+    private javax.swing.JTable tblServicios;
     private javax.swing.JTextField txtNombreServicio;
-    private javax.swing.JTextField txtPrecioCompra;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

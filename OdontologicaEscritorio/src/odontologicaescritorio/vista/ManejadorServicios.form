@@ -108,7 +108,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblProductos">
+            <Component class="javax.swing.JTable" name="tblServicios">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="ff" red="ff" type="rgb"/>
@@ -147,6 +147,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cargar ficha de servicio"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCargarServicioActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnRegistrarServicio">
           <Properties>
@@ -155,6 +158,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Registrar nuevo servicio"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarServicioActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblListaPersonas4">
           <Properties>
@@ -197,25 +203,21 @@
                       <Component id="lblListaPersonas3" max="32767" attributes="0"/>
                       <Component id="lblModo" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblIdServicio" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtPrecioCompra" min="-2" pref="100" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="txtNombreServicio" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="lblIdServicio" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btnCancelarServicio" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnEditarDatosServicios" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txtPrecio" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="txtNombreServicio" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnEditarDatosServicios" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnCancelarServicio" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="179" max="32767" attributes="0"/>
                       </Group>
@@ -243,7 +245,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtPrecioCompra" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPrecio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnEditarDatosServicios" min="-2" max="-2" attributes="0"/>
@@ -284,13 +286,19 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNombreServicio">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
             <Property name="text" type="java.lang.String" value="Precio del servicio:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtPrecioCompra">
+        <Component class="javax.swing.JTextField" name="txtPrecio">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblIdServicio">
           <Properties>
@@ -314,8 +322,12 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_editar.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Editar datos del producto"/>
+            <Property name="text" type="java.lang.String" value="Editar servicio"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarDatosServiciosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelarServicio">
           <Properties>
@@ -323,7 +335,11 @@
               <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_cancelar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarServicioActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

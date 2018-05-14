@@ -34,4 +34,9 @@ public class Lista {
         ArrayList<CiudadDTO> listaCiudades = new CiudadDAO().obtenerTodasLasCiudadesBD();
         return listaCiudades;
     }    
+    
+        public ArrayList<ServicioDTO> listarServicios(){
+        ArrayList<ServicioDTO> listaServicios = new ServicioDAO().obtenerTodosLosServiciosBD();
+        return listaServicios;
+    }
 }

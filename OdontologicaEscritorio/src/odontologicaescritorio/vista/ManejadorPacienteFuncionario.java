@@ -726,7 +726,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
             btnEditarDatosPaciente.setText("Guardar cambios");
         }else{
             if(validarFormularios()){
-                JOptionPane.showMessageDialog(rootPane, "Se ha registrado correctamente al paciente.", "Registro completado", HEIGHT);
+                JOptionPane.showMessageDialog(rootPane, "Se han actualizado correctamente los datos del paciente.", "Registro completado", HEIGHT);
             }
             lblModo.setText("Usted está en modo vista.");
             lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));            
