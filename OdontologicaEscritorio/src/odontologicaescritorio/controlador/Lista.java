@@ -35,8 +35,18 @@ public class Lista {
         return listaCiudades;
     }    
     
-        public ArrayList<ServicioDTO> listarServicios(){
+    public ArrayList<ServicioDTO> listarServicios(){
         ArrayList<ServicioDTO> listaServicios = new ServicioDAO().obtenerTodosLosServiciosBD();
         return listaServicios;
     }
+    
+    public ArrayList<FamiliaProductoDTO> listaFamiliasProducto(){
+        ArrayList<FamiliaProductoDTO> listaFamiliasProducto = new FamiliaProductoDAO().obtenerTodasLasFamiliasProductoBD();
+        return listaFamiliasProducto;       
+    }
+    
+    public ArrayList<TipoProductoDTO> listaTiposProducto(){
+        ArrayList<TipoProductoDTO> listaTiposProducto = new TipoProductoDAO().obtenerTodosLosTiposProductoBD();
+        return listaTiposProducto;       
+    }    
 }

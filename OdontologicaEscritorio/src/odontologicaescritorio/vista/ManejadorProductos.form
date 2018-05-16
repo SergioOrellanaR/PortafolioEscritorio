@@ -258,12 +258,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblModoProducto" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblModoProducto" alignment="1" max="32767" attributes="0"/>
                                   <Component id="lblListaPersonas3" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="cboTipoProducto" alignment="0" pref="255" max="32767" attributes="0"/>
@@ -292,6 +292,8 @@
                                               <Component id="cboProveedores" alignment="0" pref="255" max="32767" attributes="0"/>
                                               <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="cboFamiliaProducto" alignment="0" min="-2" pref="255" max="-2" attributes="0"/>
+                                          <Component id="jLabel18" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="188" max="32767" attributes="0"/>
                                   </Group>
@@ -319,10 +321,14 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cboProveedores" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cboFamiliaProducto" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="cboTipoProducto" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtPrecioCompra" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -336,7 +342,7 @@
                               <Component id="btnEditarDatosProducto" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnCancelarProducto" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="133" max="32767" attributes="0"/>
                               <Component id="lblModoProducto" min="-2" pref="24" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -429,6 +435,7 @@
                           <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_editar.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Editar datos del producto"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarDatosProductoActionPerformed"/>
@@ -442,6 +449,9 @@
                         <Property name="text" type="java.lang.String" value="Cancelar"/>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarProductoActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel17">
                       <Properties>
@@ -475,6 +485,27 @@
                         <Property name="text" type="java.lang.String" value="Usted est&#xe1; en modo vista."/>
                         <Property name="opaque" type="boolean" value="true"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel18">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Familia de producto:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="cboFamiliaProducto">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="4">
+                            <StringItem index="0" value="Item 1"/>
+                            <StringItem index="1" value="Item 2"/>
+                            <StringItem index="2" value="Item 3"/>
+                            <StringItem index="3" value="Item 4"/>
+                          </StringArray>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -621,6 +652,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Cargar ficha de tipo de producto"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCargarTipoActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel13">
                       <Properties>
@@ -644,6 +678,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Registrar nuevo tipo de producto"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarTipoActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -662,11 +699,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblListaPersonas4" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="lblModoTipo" max="32767" attributes="0"/>
+                                  <Component id="lblListaPersonas4" alignment="0" pref="443" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -681,10 +719,6 @@
                                           <Component id="btnCancelarTipoProducto" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
-                                      <Component id="lblModoTipo" min="-2" pref="423" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -756,7 +790,7 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtDescripcionTipo">
                       <Properties>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="editable" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -786,6 +820,7 @@
                           <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_editar.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Editar datos de tipo"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnCancelarTipoProducto">
@@ -796,6 +831,9 @@
                         <Property name="text" type="java.lang.String" value="Cancelar"/>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarTipoProductoActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblModoTipo">
                       <Properties>
@@ -969,6 +1007,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Cargar ficha de familia de producto"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCargarFamiliaActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnRegistrarFamilia">
                       <Properties>
@@ -977,6 +1018,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Registrar nueva familia de producto"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarFamiliaActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -995,11 +1039,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblListaPersonas5" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="lblModoFamilia" max="32767" attributes="0"/>
+                                  <Component id="lblListaPersonas5" alignment="0" pref="443" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -1012,10 +1057,6 @@
                                           <Component id="btnCancelarFamiliaProducto" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
-                                      <Component id="lblModoFamilia" min="-2" pref="423" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1078,7 +1119,7 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtDescripcionFamilia">
                       <Properties>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="editable" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -1092,7 +1133,11 @@
                           <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_editar.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Editar datos de familia"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarDatosFamiliaActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnCancelarFamiliaProducto">
                       <Properties>
@@ -1102,6 +1147,9 @@
                         <Property name="text" type="java.lang.String" value="Cancelar"/>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarFamiliaProductoActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblModoFamilia">
                       <Properties>
