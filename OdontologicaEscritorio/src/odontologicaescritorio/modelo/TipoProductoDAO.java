@@ -48,13 +48,13 @@ public class TipoProductoDAO implements DatosConexion{
         this.familiaTipo = familiaTipo;
     }
     
-    public ArrayList<TipoProductoDTO> obtenerTodosLosTiposProductoBD(){
+    public ArrayList<TipoProductoDTO> obtenerTiposProductoPorIdFamiliaBD(int id){
         ArrayList<TipoProductoDTO> listaTiposProducto = new ArrayList<TipoProductoDTO>();
         try{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT TIPO_PRODUCTO.ID, TIPO_PRODUCTO.DESCRIPCION, TIPO_PRODUCTO.ID_FAMILIA ||' - '|| FAMILIA.DESCRIPCION FROM TIPO_PRODUCTO JOIN FAMILIA_PRODUCTO ON (TIPO_PRODUCTO.ID_FAMILIA = FAMILIA_PRODUCTO.ID)");
+            ResultSet resultado = declaracion.executeQuery("SELECT TIPO_PRODUCTO.ID, TIPO_PRODUCTO.DESCRIPCION, TIPO_PRODUCTO.ID_FAMILIA ||' - '|| FAMILIA.DESCRIPCION FROM TIPO_PRODUCTO JOIN FAMILIA_PRODUCTO ON (TIPO_PRODUCTO.ID_FAMILIA = FAMILIA_PRODUCTO.ID) WHERE FAMILIA_PRODUCTO.ID = " + id);
             while (resultado.next()) {
                 this.setId(resultado.getInt(1));
                 this.setDescripcion(resultado.getString(2));
@@ -68,6 +68,26 @@ public class TipoProductoDAO implements DatosConexion{
         }
     }
 
+    public ArrayList<TipoProductoDTO> obtenerTiposProductoBD(){
+        ArrayList<TipoProductoDTO> listaTiposProducto = new ArrayList<TipoProductoDTO>();
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            ResultSet resultado = declaracion.executeQuery("SELECT TIPO_PRODUCTO.ID, TIPO_PRODUCTO.DESCRIPCION, TIPO_PRODUCTO.ID_FAMILIA ||' - '|| FAMILIA_PRODUCTO.DESCRIPCION FROM TIPO_PRODUCTO JOIN FAMILIA_PRODUCTO ON (TIPO_PRODUCTO.ID_FAMILIA = FAMILIA_PRODUCTO.ID)");
+            while (resultado.next()) {
+                this.setId(resultado.getInt(1));
+                this.setDescripcion(resultado.getString(2));
+                listaTiposProducto.add(new TipoProductoDTO(this.getId(), this.getDescripcion(), this.getFamiliaTipo()));
+            }  
+            conexion.close();
+            return listaTiposProducto;
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return listaTiposProducto;
+        }
+    }    
+    
     public String registrarServicioBD(){
         try{
             Class.forName(DRIVER);

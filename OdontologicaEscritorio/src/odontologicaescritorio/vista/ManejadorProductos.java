@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import odontologicaescritorio.modelo.*;
 import odontologicaescritorio.controlador.*;
 /**
@@ -11,20 +13,88 @@ import odontologicaescritorio.controlador.*;
  * @author Marco Antonio
  */
 public class ManejadorProductos extends javax.swing.JInternalFrame {
-
+    private ArrayList<FamiliaProductoDTO> listaFamilias;
+    private ArrayList<TipoProductoDTO> listaTipoProducto;
+    private ArrayList<ProductoDTO> listaProductos;
     /**
      * Creates new form ManejadorProductos
      */
     public ManejadorProductos() {
         initComponents();
         actualizarComponentesFamilia();
+        actualizarTablaFamilia();
+        actualizarTablaProducto();
+        actualizarTablaTipo();
+        actualizarCboTipo(cboFamiliaProducto, cboTipoProducto);
     }
     
     public void actualizarComponentesFamilia(){
         for(FamiliaProductoDTO familiaProducto : new Lista().listaFamiliasProducto()){
             cboFamiliaTipo.addItem(familiaProducto.getId() + " - " + familiaProducto.getDescripcion());
+            cboFamiliaProducto.addItem(familiaProducto.getId() + " - " + familiaProducto.getDescripcion());
         }
     }
+    
+    public void actualizarCboTipo(javax.swing.JComboBox<String> comboBoxFamilia, javax.swing.JComboBox<String> comboBoxTipo){
+        int idFamilia = Integer.parseInt(String.valueOf(comboBoxFamilia.getSelectedItem()).split(" ")[0]);
+        for(TipoProductoDTO tipoProducto : new Lista().listaTiposProductoPorIdFamilia(idFamilia)){
+            comboBoxTipo.addItem(tipoProducto.getId() + " - " + tipoProducto.getDescripcion());
+        }        
+    }
+    
+    public void actualizarCboProveedores(){
+        for(ProveedorDTO proveedor : new Lista().){
+            comboBoxTipo.addItem(tipoProducto.getId() + " - " + tipoProducto.getDescripcion());
+        }        
+    }    
+    
+    public void actualizarTablaProducto(){
+        listaProductos = new Lista().listaProductos();
+        String[] columnas = {"ID","Nombre", "Precio compra", "Precio venta"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        
+        for(ProductoDTO producto : listaProductos){
+            String id            = String.valueOf(producto.getId());
+            String nombre        = producto.getNombre();
+            String precioCompra  = String.valueOf(producto.getPrecioCompra());
+            String precioVenta   = String.valueOf(producto.getPrecioVenta());
+            String proveedor     = producto.getIdProveedor();
+            String tipo          = producto.getIdTipo();
+            String familia       = producto.getIdFamilia();
+            Object[] elemento    = {id, nombre, precioCompra, precioVenta};
+            modeloTabla.addRow(elemento);
+        };
+        tblProductos.setModel(modeloTabla);           
+    }
+    
+    public void actualizarTablaTipo(){
+        listaTipoProducto = new Lista().listaTiposProducto();
+        String[] columnas = {"ID","Descripcion"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        
+        for(TipoProductoDTO tipo : listaTipoProducto){
+            String id            = String.valueOf(tipo.getId());
+            String descripcion   = tipo.getDescripcion();
+            Object[] elemento = {id, descripcion};
+            modeloTabla.addRow(elemento);
+        };
+        tblTipos.setModel(modeloTabla);           
+    }
+    
+    public void actualizarTablaFamilia(){
+        listaFamilias = new Lista().listaFamiliasProducto();
+        String[] columnas = {"ID","Descripcion"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        
+        for(FamiliaProductoDTO familia : listaFamilias){
+            String id            = String.valueOf(familia.getId());
+            String descripcion   = familia.getDescripcion();
+            Object[] elemento = {id, descripcion};
+            modeloTabla.addRow(elemento);
+        };
+        tblFamilias.setModel(modeloTabla);               
+    }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +134,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         lblModoProducto = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         cboFamiliaProducto = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         btnCargarFichaTipo = new javax.swing.JPanel();
         lblListaPersonas1 = new javax.swing.JLabel();
@@ -169,9 +240,9 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblListaPersonas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCargarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                    .addComponent(btnCargarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistrarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -219,7 +290,6 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
 
         jLabel16.setText("Tipo de poducto:");
 
-        cboTipoProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboTipoProducto.setEnabled(false);
 
         btnEditarDatosProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
@@ -242,7 +312,6 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
 
         jLabel17.setText("Proveedor:");
 
-        cboProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboProveedores.setEnabled(false);
 
         lblModoProducto.setBackground(new java.awt.Color(204, 255, 204));
@@ -252,8 +321,15 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
 
         jLabel18.setText("Familia de producto:");
 
-        cboFamiliaProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboFamiliaProducto.setEnabled(false);
+        cboFamiliaProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboFamiliaProductoActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_avanzar.png"))); // NOI18N
+        jButton1.setText("Proveedores");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -267,7 +343,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cboTipoProducto, 0, 255, Short.MAX_VALUE)
+                                .addComponent(cboTipoProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel10Layout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -283,14 +359,17 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                                     .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel16)
                                 .addComponent(btnCancelarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEditarDatosProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnEditarDatosProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                                 .addComponent(txtNombreProducto))
-                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cboProveedores, 0, 255, Short.MAX_VALUE)
-                                .addComponent(jLabel17))
                             .addComponent(cboFamiliaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 188, Short.MAX_VALUE)))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cboProveedores, 0, 255, Short.MAX_VALUE)
+                                    .addComponent(jLabel17))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -309,7 +388,9 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -330,7 +411,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                 .addComponent(btnEditarDatosProducto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelarProducto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(lblModoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -341,9 +422,9 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -457,7 +538,6 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Familia de tipo:");
 
-        cboFamiliaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboFamiliaTipo.setEnabled(false);
 
         btnEditarDatosTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
@@ -486,7 +566,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(cboFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblModoTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblListaPersonas4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                    .addComponent(lblListaPersonas4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, cboFamiliaLayout.createSequentialGroup()
                         .addGroup(cboFamiliaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(cboFamiliaLayout.createSequentialGroup()
@@ -679,7 +759,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblModoFamilia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblListaPersonas5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                    .addComponent(lblListaPersonas5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel11Layout.createSequentialGroup()
@@ -813,6 +893,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
             btnEditarDatosProducto.setText("Confirmar registro");
             txtNombreProducto.setEditable(true);
             cboProveedores.setEnabled(true);
+            cboFamiliaProducto.setEnabled(true);
             cboTipoProducto.setEnabled(true);
             txtPrecioCompra.setEditable(true);
             txtPrecioVenta.setEditable(true);
@@ -829,6 +910,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
             btnEditarDatosProducto.setText("Editar datos del producto");
             txtNombreProducto.setEditable(false);
             cboProveedores.setEnabled(false);
+            cboFamiliaProducto.setEnabled(false);
             cboTipoProducto.setEnabled(false);
             txtPrecioCompra.setEditable(false);
             txtPrecioVenta.setEditable(false);
@@ -965,6 +1047,10 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEditarDatosFamiliaActionPerformed
 
+    private void cboFamiliaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFamiliaProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboFamiliaProductoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarFamiliaProducto;
@@ -985,6 +1071,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cboFamiliaTipo;
     private javax.swing.JComboBox<String> cboProveedores;
     private javax.swing.JComboBox<String> cboTipoProducto;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

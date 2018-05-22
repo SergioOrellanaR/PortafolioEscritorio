@@ -45,8 +45,18 @@ public class Lista {
         return listaFamiliasProducto;       
     }
     
-    public ArrayList<TipoProductoDTO> listaTiposProducto(){
-        ArrayList<TipoProductoDTO> listaTiposProducto = new TipoProductoDAO().obtenerTodosLosTiposProductoBD();
+    public ArrayList<TipoProductoDTO> listaTiposProductoPorIdFamilia(int id){
+        ArrayList<TipoProductoDTO> listaTiposProducto = new TipoProductoDAO().obtenerTiposProductoPorIdFamiliaBD(id);
         return listaTiposProducto;       
-    }    
+    }  
+    
+    public ArrayList<TipoProductoDTO> listaTiposProducto(){
+        ArrayList<TipoProductoDTO> listaTiposProducto = new TipoProductoDAO().obtenerTiposProductoBD();
+        return listaTiposProducto;       
+    } 
+    
+    public ArrayList<ProductoDTO> listaProductos(){
+        ArrayList<ProductoDTO> listaProductos = new ProductoDAO().obtenerTodosLosProductosBD();
+        return listaProductos;       
+    }     
 }

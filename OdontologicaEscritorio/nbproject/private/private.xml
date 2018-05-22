@@ -19,6 +19,7 @@
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/VentanaPrincipal.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/PacienteDAO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Lista.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/ProveedorDAO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/ManejadorUsuarios.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/CiudadDAO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/test/PruebasBD.java</file>
@@ -33,6 +34,7 @@
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/FamiliaProductoDAO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/ComunaDAO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/FuncionarioDTO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/ProveedorDTO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Actualizacion.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/UsuarioDAO.java</file>
         </group>
