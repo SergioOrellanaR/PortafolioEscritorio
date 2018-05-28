@@ -111,7 +111,7 @@ public class UsuarioDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT USUARIO.ID, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.ID_PREGUNTA, USUARIO.RESP_PREGUNTA, PERSONA.RUT FROM USUARIO JOIN PERSONA ON (PERSONA.ID_USUARIO = USUARIO.ID) WHERE USUARIO.ID = " + id);
+            ResultSet resultado = declaracion.executeQuery("SELECT USUARIO.ID, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.ID_PREGUNTA, USUARIO.RESP_PREGUNTA, PERSONA.RUT FROM USUARIO JOIN FUNCIONARIO ON (FUNCIONARIO.ID_USUARIO = USUARIO.ID) WHERE USUARIO.ID = " + id);
             while (resultado.next()) {
                 this.setId(resultado.getInt(1));
                 this.setNombre(resultado.getString(2));
@@ -139,7 +139,7 @@ public class UsuarioDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT USUARIO.ID, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.ID_PREGUNTA, USUARIO.RESP_PREGUNTA, PERSONA.RUT FROM USUARIO JOIN PERSONA ON (PERSONA.ID_USUARIO = USUARIO.ID) WHERE USUARIO.NOMBRE = '" + nombre + "' AND USUARIO.CLAVE = '" + clave + "'");
+            ResultSet resultado = declaracion.executeQuery("SELECT USUARIO.ID, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.ID_PREGUNTA, USUARIO.RESP_PREGUNTA, FUNCIONARIO.RUT FROM USUARIO JOIN FUNCIONARIO ON (FUNCIONARIO.ID_USUARIO = USUARIO.ID) WHERE USUARIO.NOMBRE = '" + nombre + "' AND USUARIO.CLAVE = '" + clave + "'");
             while (resultado.next()) {
                 this.setId(resultado.getInt(1));
                 this.setNombre(resultado.getString(2));

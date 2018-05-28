@@ -42,11 +42,11 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         }        
     }
     
-    public void actualizarCboProveedores(){
-        for(ProveedorDTO proveedor : new Lista().){
-            comboBoxTipo.addItem(tipoProducto.getId() + " - " + tipoProducto.getDescripcion());
-        }        
-    }    
+//    public void actualizarCboProveedores(){
+//        for(ProveedorDTO proveedor : new Lista().){
+//            comboBoxTipo.addItem(tipoProducto.getId() + " - " + tipoProducto.getDescripcion());
+//        }        
+//    }    
     
     public void actualizarTablaProducto(){
         listaProductos = new Lista().listaProductos();

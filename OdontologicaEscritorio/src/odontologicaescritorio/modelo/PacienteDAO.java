@@ -154,7 +154,7 @@ public class PacienteDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE FROM CLIENTE JOIN PERSONA ON (CLIENTE.RUT = PERSONA.RUT) JOIN COMUNA ON (PERSONA.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID)");
+            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, CLIENTE.DV, CLIENTE.P_NOMBRE, CLIENTE.S_NOMBRE, CLIENTE.P_APELLIDO, CLIENTE.S_APELLIDO, TO_CHAR(CLIENTE.FECHA_NAC, 'YYYY-MM-DD'), CLIENTE.SEXO, CLIENTE.DIRECCION, CLIENTE.TELEFONO, CLIENTE.EMAIL, CLIENTE.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE, CLIENTE.VULNERABLE FROM CLIENTE JOIN COMUNA ON (CLIENTE.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID)");
             while (resultado.next()) {
                 this.setRut(resultado.getInt(1));
                 this.setDv(resultado.getString(2).charAt(0));

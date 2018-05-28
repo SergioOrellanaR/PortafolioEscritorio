@@ -26,6 +26,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.usuarioSesion = usuarioSesion;
         confirmarPermisos();
         lblFuncionarioConectado.setText(lblFuncionarioConectado.getText() + " " + funcionarioSesion.getRut() + " - " + funcionarioSesion.getDv() + " / " + funcionarioSesion.getP_nombre() + " " + funcionarioSesion.getP_apellido());
+    
+        ItinerarioHoras itinerarioHoras = new ItinerarioHoras();
+        panelEscritorio.add(itinerarioHoras);
+        itinerarioHoras.setVisible(true);      
     }
     
     public void confirmarPermisos(){
