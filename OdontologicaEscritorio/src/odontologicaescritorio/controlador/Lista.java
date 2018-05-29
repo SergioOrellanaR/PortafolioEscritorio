@@ -20,6 +20,11 @@ public class Lista {
         return listaFuncionarios;
     }    
     
+    public ArrayList<FuncionarioDTO> listarFuncionariosPorTipo(int idTipo){
+        ArrayList<FuncionarioDTO> listaFuncionarios = new FuncionarioDAO().obtenerFuncionariosPorTipoBD(idTipo);
+        return listaFuncionarios;
+    }        
+    
     public ArrayList<UsuarioDTO> listarUsuarios(){
         ArrayList<UsuarioDTO> listaUsuarios = new UsuarioDAO().obtenerTodosLosUsuariosBD();
         return listaUsuarios;

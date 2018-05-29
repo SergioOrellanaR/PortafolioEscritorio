@@ -5,6 +5,7 @@
  */
 package odontologicaescritorio.controlador;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import odontologicaescritorio.modelo.*;
 
@@ -24,4 +25,8 @@ public class Registro {
     public String registrarServicioBD(String descripcion, int precio){
         return new ServicioDAO(0, descripcion, precio).registrarServicioBD();
     }
+    
+    public String registrarHoraBD(int id, LocalDate fecha, LocalTime hora, int rutFuncionario, int rutCliente){
+        return new HoraDAO(id, fecha, hora, rutFuncionario, rutCliente).registrarHoraBD();
+    }    
 }

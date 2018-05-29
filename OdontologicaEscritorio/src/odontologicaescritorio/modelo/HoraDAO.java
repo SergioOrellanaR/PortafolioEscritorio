@@ -90,5 +90,34 @@ public class HoraDAO implements DatosConexion{
             System.out.println("Error en obtención de horas desde BD: " + e);
         }
         return listaHoras;
-    }    
+    }
+
+    public String registrarHoraBD(){
+        String fechaFormateada = String.format("%d-%d-%d:%d:%d:00", this.getFecha().getYear(), this.getFecha().getMonthValue(), this.getFecha().getDayOfMonth(), this.getHora().getHour(), this.getHora().getMinute());
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            declaracion.executeUpdate("INSERT INTO HORA VALUES (SEQ_ID_HORA.NEXTVAL, TO_DATE('" + fechaFormateada + "', 'YYYY-MM-DD:HH24:MI:SS'), " + this.rutFuncionario + ", " + this.rutCliente + ")");
+            conexion.close();
+            return "Registro de hora en la base de datos fue exitoso.";
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return "No se pudo registrar hora en base de datos: " + e;
+        }        
+    }
+
+    public String eliminarHoraBD(int idHora){
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            declaracion.executeUpdate("DELETE FROM HORA WHERE ID = " + idHora + "");
+            conexion.close();
+            return "Se eliminó la hora seleccionada.";
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return "No se pudo eliminar la hora seleccionada: " + e;
+        }        
+    }     
 }

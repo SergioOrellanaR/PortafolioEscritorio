@@ -217,9 +217,40 @@ public class FuncionarioDAO implements DatosConexion{
         }catch(Exception e){
             System.out.println("Error : " + e);
             return listaFuncionarios;
-        }
-        
+        }  
     }    
+    
+    public ArrayList<FuncionarioDTO> obtenerFuncionariosPorTipoBD(int idTipo){
+        ArrayList<FuncionarioDTO> listaFuncionarios = new ArrayList<FuncionarioDTO>();
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            ResultSet resultado = declaracion.executeQuery("SELECT FUNCIONARIO.RUT, FUNCIONARIO.DV, FUNCIONARIO.P_NOMBRE, FUNCIONARIO.S_NOMBRE, FUNCIONARIO.P_APELLIDO, FUNCIONARIO.S_APELLIDO, TO_CHAR(FUNCIONARIO.FECHA_NAC, 'YYYY-MM-DD'), FUNCIONARIO.SEXO, FUNCIONARIO.DIRECCION, FUNCIONARIO.TELEFONO, FUNCIONARIO.EMAIL, FUNCIONARIO.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE, FUNCIONARIO.ID_TIPO || ' - ' || TIPO_FUNCIONARIO.DESCRIPCION FROM FUNCIONARIO JOIN COMUNA ON (FUNCIONARIO.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID) JOIN TIPO_FUNCIONARIO ON (TIPO_FUNCIONARIO.ID = FUNCIONARIO.ID_TIPO) WHERE FUNCIONARIO.ID_TIPO = " + idTipo);
+            while (resultado.next()) {
+                this.setRut(resultado.getInt(1));
+                this.setDv(resultado.getString(2).charAt(0));
+                this.setP_nombre(resultado.getString(3));
+                this.setS_nombre(resultado.getString(4));
+                this.setP_apellido(resultado.getString(5));
+                this.setS_apellido(resultado.getString(6));
+                this.setF_nacimiento(LocalDate.parse(resultado.getString(7)));
+                this.setSexo(resultado.getString(8).charAt(0));
+                this.setDireccion(resultado.getString(9));
+                this.setTelefono(resultado.getInt(10));
+                this.setEmail(resultado.getString(11));
+                this.setComuna(resultado.getString(12));
+                this.setCiudad(resultado.getString(13));
+                this.setTipoFuncionario(resultado.getString(14));
+                listaFuncionarios.add(new FuncionarioDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getTipoFuncionario()));
+            }  
+            conexion.close();
+            return listaFuncionarios;
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return listaFuncionarios;
+        }  
+    }     
     
     public String registrarFuncionarioBD(){
         int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);

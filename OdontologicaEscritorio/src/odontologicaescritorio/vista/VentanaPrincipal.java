@@ -27,7 +27,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         confirmarPermisos();
         lblFuncionarioConectado.setText(lblFuncionarioConectado.getText() + " " + funcionarioSesion.getRut() + " - " + funcionarioSesion.getDv() + " / " + funcionarioSesion.getP_nombre() + " " + funcionarioSesion.getP_apellido());
     
-        ItinerarioHoras itinerarioHoras = new ItinerarioHoras();
+        ItinerarioHoras itinerarioHoras = new ItinerarioHoras(19516774,"Marco Medina" , 1, 2018,0);
         panelEscritorio.add(itinerarioHoras);
         itinerarioHoras.setVisible(true);      
     }
@@ -80,6 +80,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         chkPermisoCliente = new javax.swing.JCheckBox();
         btnVerMiPerfil = new javax.swing.JButton();
         btnCerrarSesion1 = new javax.swing.JButton();
+        pnlSolicitudesBodega = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        lblSolicitudesBodega = new javax.swing.JLabel();
+        btnCerrarSesion2 = new javax.swing.JButton();
         barraMenu = new javax.swing.JMenuBar();
         mnuAdministracion = new javax.swing.JMenu();
         mnuManejoUsuarios = new javax.swing.JMenuItem();
@@ -212,6 +216,53 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelEscritorio.add(jPanel1);
         jPanel1.setBounds(10, 10, 720, 130);
 
+        pnlSolicitudesBodega.setBackground(new java.awt.Color(218, 210, 226));
+        pnlSolicitudesBodega.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel9.setBackground(new java.awt.Color(0, 0, 102));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_dialogo.png"))); // NOI18N
+        jLabel9.setText("Solicitudes a bodega");
+        jLabel9.setIconTextGap(0);
+        jLabel9.setOpaque(true);
+
+        lblSolicitudesBodega.setText("(Mensaje de número de solicitudes)");
+
+        btnCerrarSesion2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ingresar.png"))); // NOI18N
+        btnCerrarSesion2.setText("Abrir manejador de solicitudes");
+        btnCerrarSesion2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesion2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlSolicitudesBodegaLayout = new javax.swing.GroupLayout(pnlSolicitudesBodega);
+        pnlSolicitudesBodega.setLayout(pnlSolicitudesBodegaLayout);
+        pnlSolicitudesBodegaLayout.setHorizontalGroup(
+            pnlSolicitudesBodegaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+            .addGroup(pnlSolicitudesBodegaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlSolicitudesBodegaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCerrarSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSolicitudesBodega))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlSolicitudesBodegaLayout.setVerticalGroup(
+            pnlSolicitudesBodegaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSolicitudesBodegaLayout.createSequentialGroup()
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSolicitudesBodega)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCerrarSesion2)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        panelEscritorio.add(pnlSolicitudesBodega);
+        pnlSolicitudesBodega.setBounds(10, 150, 720, 90);
+
         mnuAdministracion.setText("Módulo de administración");
         mnuAdministracion.setEnabled(false);
 
@@ -317,7 +368,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         barraMenu.add(mnuRecepcion);
 
-        mnuLogistica.setText("Módulo de logística");
+        mnuLogistica.setText("Módulo de bodegas");
         mnuLogistica.setEnabled(false);
 
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_tipo.png"))); // NOI18N
@@ -334,7 +385,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mnuLogistica.add(jMenuItem9);
 
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_informacion.png"))); // NOI18N
-        jMenuItem10.setText("Solicitudes a logística");
+        jMenuItem10.setText("Solicitudes a bodega");
         mnuLogistica.add(jMenuItem10);
 
         barraMenu.add(mnuLogistica);
@@ -345,7 +396,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+            .addComponent(panelEscritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,10 +466,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         emisorBoletaServicio.setVisible(true); 
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    private void btnCerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCerrarSesion1;
+    private javax.swing.JButton btnCerrarSesion2;
     private javax.swing.JButton btnVerMiPerfil;
     private javax.swing.JCheckBox chkPermisoAdministrador;
     private javax.swing.JCheckBox chkPermisoCliente;
@@ -427,6 +483,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkPermisoRecepcionista;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -444,12 +501,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblFuncionarioConectado;
+    private javax.swing.JLabel lblSolicitudesBodega;
     private javax.swing.JMenu mnuAdministracion;
     private javax.swing.JMenu mnuLogistica;
     private javax.swing.JMenuItem mnuManejoUsuarios;
     private javax.swing.JMenu mnuOdontologia;
     private javax.swing.JMenu mnuRecepcion;
     private javax.swing.JDesktopPane panelEscritorio;
+    private javax.swing.JPanel pnlSolicitudesBodega;
     // End of variables declaration//GEN-END:variables
 
 }
