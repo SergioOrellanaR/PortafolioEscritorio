@@ -25,6 +25,11 @@ public class Lista {
         return listaFuncionarios;
     }        
     
+    public ArrayList<ProveedorDTO> listarProveedores(){
+        ArrayList<ProveedorDTO> listaProveedores = new ProveedorDAO().obtenerTodosLosProveedoresBD();
+        return listaProveedores;
+    } 
+    
     public ArrayList<UsuarioDTO> listarUsuarios(){
         ArrayList<UsuarioDTO> listaUsuarios = new UsuarioDAO().obtenerTodosLosUsuariosBD();
         return listaUsuarios;
@@ -38,7 +43,12 @@ public class Lista {
     public ArrayList<CiudadDTO> listarCiudades(){
         ArrayList<CiudadDTO> listaCiudades = new CiudadDAO().obtenerTodasLasCiudadesBD();
         return listaCiudades;
-    }    
+    }   
+    
+    public ArrayList<RubroDTO> listarRubros(){
+        ArrayList<RubroDTO> listaRubros = new RubroDAO().obtenerTodasLasCiudadesBD();
+        return listaRubros;
+    }      
     
     public ArrayList<ServicioDTO> listarServicios(){
         ArrayList<ServicioDTO> listaServicios = new ServicioDAO().obtenerTodosLosServiciosBD();

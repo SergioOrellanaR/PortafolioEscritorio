@@ -25,10 +25,11 @@ public class PacienteDAO implements DatosConexion{
     private String email;
     private String comuna;
     private String ciudad;
+    private int vulnerable;
 
     public PacienteDAO(){};
 
-    public PacienteDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
+    public PacienteDAO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad, int vulnerable) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -42,6 +43,7 @@ public class PacienteDAO implements DatosConexion{
         this.email = email;
         this.comuna = comuna;
         this.ciudad = ciudad;
+        this.vulnerable = vulnerable;
     }
 
     public int getRut() {
@@ -147,6 +149,14 @@ public class PacienteDAO implements DatosConexion{
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+
+    public int getVulnerable() {
+        return vulnerable;
+    }
+
+    public void setVulnerable(int vulnerable) {
+        this.vulnerable = vulnerable;
+    }
     
     public ArrayList<PacienteDTO> obtenerTodosLosPacientesBD(){
         ArrayList<PacienteDTO> listaPacientes = new ArrayList<PacienteDTO>();
@@ -169,7 +179,8 @@ public class PacienteDAO implements DatosConexion{
                 this.setEmail(resultado.getString(11));
                 this.setComuna(resultado.getString(12));
                 this.setCiudad(resultado.getString(13));
-                listaPacientes.add(new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad()));
+                this.setVulnerable(resultado.getInt(14));
+                listaPacientes.add(new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getVulnerable()));
             }  
             conexion.close();
             return listaPacientes;
@@ -195,6 +206,23 @@ public class PacienteDAO implements DatosConexion{
         }
     }
     
+// EJEMPLO DE PROCEDIMIENTO ALMACENADO
+//    public String registrarPacienteBD(){
+//        int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);
+//        try{
+//            Class.forName(DRIVER);
+//            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+//            //Statement declaracion = conexion.createStatement();
+//            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )}");
+//            procedimientoAlmacenado.execute();
+//            //declaracion.executeUpdate("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
+//            conexion.close();
+//            return "El registro del paciente y su usuario en la base de datos fue exitoso.";
+//        }catch(Exception e){
+//            return "Error en registro de paciente: " + e;
+//        }
+//    }    
+    
     public int buscarPacienteBD(int rut){
         int contador = 0;
         try{
@@ -218,7 +246,7 @@ public class PacienteDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, PERSONA.DV, PERSONA.P_NOMBRE, PERSONA.S_NOMBRE, PERSONA.P_APELLIDO, PERSONA.S_APELLIDO, TO_CHAR(PERSONA.FECHA_NAC, 'YYYY-MM-DD'), PERSONA.SEXO, PERSONA.DIRECCION, PERSONA.TELEFONO, PERSONA.EMAIL, PERSONA.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE FROM CLIENTE JOIN PERSONA ON (CLIENTE.RUT = PERSONA.RUT) JOIN COMUNA ON (PERSONA.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID)");
+            ResultSet resultado = declaracion.executeQuery("SELECT CLIENTE.RUT, CLIENTE.DV, CLIENTE.P_NOMBRE, CLIENTE.S_NOMBRE, CLIENTE.P_APELLIDO, CLIENTE.S_APELLIDO, TO_CHAR(CLIENTE.FECHA_NAC, 'YYYY-MM-DD'), CLIENTE.SEXO, CLIENTE.DIRECCION, CLIENTE.TELEFONO, CLIENTE.EMAIL, CLIENTE.ID_COMUNA ||' - '|| COMUNA.NOMBRE, CIUDAD.ID ||' - '|| CIUDAD.NOMBRE, CLIENTE.VULNERABLE FROM CLIENTE JOIN COMUNA ON (CLIENTE.ID_COMUNA = COMUNA.ID) JOIN CIUDAD ON (COMUNA.ID_CIUDAD = CIUDAD.ID) WHERE CLIENTE.RUT = " + rut);
             while (resultado.next()) {
                 this.setRut(resultado.getInt(1));
                 this.setDv(resultado.getString(2).charAt(0));
@@ -233,12 +261,13 @@ public class PacienteDAO implements DatosConexion{
                 this.setEmail(resultado.getString(11));
                 this.setComuna(resultado.getString(12));
                 this.setCiudad(resultado.getString(13));
+                this.setVulnerable(resultado.getInt(14));
             }  
             conexion.close();
-            return new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
+            return new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getVulnerable());
         }catch(Exception e){
             System.out.println("Error : " + e);
-            return new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad());
+            return new PacienteDTO(this.getRut(), this.getDv(), this.getP_nombre(), this.getS_nombre(), this.getP_apellido(), this.getS_apellido(), this.getF_nacimiento(), this.getSexo(), this.getDireccion(), this.getTelefono(), this.getEmail(), this.getComuna(), this.getCiudad(), this.getVulnerable());
         }
     }    
 }

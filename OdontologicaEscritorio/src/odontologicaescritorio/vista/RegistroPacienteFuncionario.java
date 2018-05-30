@@ -6,6 +6,7 @@
 package odontologicaescritorio.vista;
 import java.time.LocalDate;
 import odontologicaescritorio.controlador.*;
+import odontologicaescritorio.modelo.*;
 
 import javax.swing.JOptionPane;
 
@@ -31,6 +32,16 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
             panelTipoFuncionario.setVisible(false);
             lblNoticiaFun.setVisible(false);
         }
+        
+        for(CiudadDTO ciudad : new Lista().listarCiudades()){
+            cboCiudad.addItem(ciudad.getIdNombre());
+        }
+    }
+    
+    public void actualizarCboComunas(){
+        for(ComunaDTO comuna : new Lista().listarComunas(Integer.parseInt(cboCiudad.getSelectedItem().toString().split(" ")[0]))){
+            cboCiudad.addItem(comuna.getIdNombre());
+        }        
     }
 
     /**
@@ -118,8 +129,6 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Comuna:");
 
-        cboComuna.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - COMUNA" }));
-
         jLabel10.setText("Dirección:");
 
         jLabel9.setBackground(new java.awt.Color(146, 128, 183));
@@ -160,7 +169,11 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Ciudad:");
 
-        cboCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - CIUDAD" }));
+        cboCiudad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboCiudadItemStateChanged(evt);
+            }
+        });
 
         lblNoticiaFun.setBackground(new java.awt.Color(255, 102, 102));
         lblNoticiaFun.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_advertencia.png"))); // NOI18N
@@ -378,7 +391,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 445, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 449, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
@@ -430,13 +443,17 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                             Integer.parseInt(txtDia.getText()));
                     char sexo = String.valueOf(cboSexo.getSelectedItem()).charAt(0);          
                     JOptionPane.showMessageDialog(rootPane,
-                            new Registro().registrarPacienteYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()))
+                            new Registro().registrarPacienteYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()), 0)
                             ,
                             "Registro completado", HEIGHT);
                 }
                 break;
         }
     }//GEN-LAST:event_btnFinalizarRegistroPacienteActionPerformed
+
+    private void cboCiudadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCiudadItemStateChanged
+        actualizarCboComunas();
+    }//GEN-LAST:event_cboCiudadItemStateChanged
 
     private boolean validarFormularios(){
         if(txtRUT.getText().length() == 0){

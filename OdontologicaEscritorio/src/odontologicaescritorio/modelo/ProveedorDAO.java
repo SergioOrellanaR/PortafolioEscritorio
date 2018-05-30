@@ -118,7 +118,7 @@ public class ProveedorDAO implements DatosConexion{
         this.idRubro = idRubro;
     }
 
-    public ArrayList<ProveedorDTO> obtenerTodasLasFamiliasProductoBD(){
+    public ArrayList<ProveedorDTO> obtenerTodosLosProveedoresBD(){
         ArrayList<ProveedorDTO> listaProveedores = new ArrayList<ProveedorDTO>();
         try{
             Class.forName(DRIVER);
@@ -134,14 +134,29 @@ public class ProveedorDAO implements DatosConexion{
                 this.setEmail(resultado.getString(6));
                 this.setNombreRepresentante(resultado.getString(7));
                 this.setRutRepresentante(resultado.getInt(8));
-                this.setDvRepresentante(resultado.getString(9).charAt(0));                
-            }  
+                this.setDvRepresentante(resultado.getString(9).charAt(0));   
+                listaProveedores.add(new ProveedorDTO(this.getId(), this.getNombreEmpresa(), this.getRutEmpresa(), this.getDvEmpresa(), this.getTelefono(), this.getEmail(), this.getNombreRepresentante(), this.getRutRepresentante(), this.getDvRepresentante(), this.getIdRubro()));
+            }
             conexion.close();
             return listaProveedores;
         }catch(Exception e){
             System.out.println("Error : " + e);
             return listaProveedores;
         }
+    }
+    
+    public String registrarProveedorBD(){
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            declaracion.executeUpdate("INSERT INTO PROVEEDOR (PROVEEDOR.ID, PROVEEDOR.NOMBRE_EMPRESA, PROVEEDOR.RUT_EMPRESA, PROVEEDOR.DV_EMPRESA, PROVEEDOR.TELEFONO, PROVEEDOR.EMAIL, PROVEEDOR.NOMBRE_REPRESENTANTE, PROVEEDOR.RUT_REPRESENTANTE, PROVEEDOR.DV_REPRESENTANTE, PROVEEDOR.ID_RUBRO) VALUES (SEQ_ID_PROVEEDOR.NEXTVAL, '" + this.getNombreEmpresa() + "', " + this.getRutEmpresa() + ",'" + this.getDvEmpresa() +"', " + this.getTelefono() +", '" + this.getEmail() +"','" + this.getNombreRepresentante() +"', " + this.getRutRepresentante() +",'" + this.getDvRepresentante() + "'," + this.getIdRubro().split(" ")[0] + ")");
+            conexion.close();
+            return "Registro de proveedor en la base de datos fue exitoso.";
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return "No se pudo registrar proveedor en base de datos: " + e;
+        }        
     }
     
 }

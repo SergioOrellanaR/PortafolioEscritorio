@@ -157,6 +157,14 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_reloj.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Agenda de horas"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="mnuLogistica">
@@ -191,6 +199,17 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Solicitudes a bodega"/>
               </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_servicio.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Manejo de proveedores"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem14ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -442,8 +461,8 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnCerrarSesion2" min="-2" pref="211" max="-2" attributes="0"/>
                           <Component id="lblSolicitudesBodega" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCerrarSesion2" min="-2" pref="266" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>

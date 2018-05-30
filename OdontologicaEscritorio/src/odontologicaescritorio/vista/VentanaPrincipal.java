@@ -101,10 +101,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         mnuLogistica = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -245,8 +247,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(pnlSolicitudesBodegaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlSolicitudesBodegaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCerrarSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSolicitudesBodega))
+                    .addComponent(lblSolicitudesBodega)
+                    .addComponent(btnCerrarSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlSolicitudesBodegaLayout.setVerticalGroup(
@@ -366,6 +368,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         mnuRecepcion.add(jMenu3);
 
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
+        jMenuItem13.setText("Agenda de horas");
+        mnuRecepcion.add(jMenuItem13);
+
         barraMenu.add(mnuRecepcion);
 
         mnuLogistica.setText("Módulo de bodegas");
@@ -387,6 +393,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_informacion.png"))); // NOI18N
         jMenuItem10.setText("Solicitudes a bodega");
         mnuLogistica.add(jMenuItem10);
+
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem14.setText("Manejo de proveedores");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        mnuLogistica.add(jMenuItem14);
 
         barraMenu.add(mnuLogistica);
 
@@ -470,6 +485,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        ManejadorProveedores manejadorProveedores = new ManejadorProveedores();
+        panelEscritorio.add(manejadorProveedores);
+        manejadorProveedores.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnCerrarSesion;
@@ -491,6 +512,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

@@ -24,8 +24,9 @@ public class PacienteDTO {
     private String email;
     private String comuna;
     private String ciudad;
+    private int vulnerable;
 
-    public PacienteDTO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad) {
+    public PacienteDTO(int rut, char dv, String p_nombre, String s_nombre, String p_apellido, String s_apellido, LocalDate f_nacimiento, char sexo, String direccion, int telefono, String email, String comuna, String ciudad, int vulnerable) {
         this.rut = rut;
         this.dv = dv;
         this.p_nombre = p_nombre;
@@ -39,6 +40,7 @@ public class PacienteDTO {
         this.email = email;
         this.comuna = comuna;
         this.ciudad = ciudad;
+        this.vulnerable = vulnerable;
     }
 
     public int getRut() {
@@ -145,5 +147,12 @@ public class PacienteDTO {
         this.ciudad = ciudad;
     }
     
+    public int getVulnerable() {
+        return vulnerable;
+    }
+
+    public void setVulnerable(int vulnerable) {
+        this.vulnerable = vulnerable;
+    }    
     
 }

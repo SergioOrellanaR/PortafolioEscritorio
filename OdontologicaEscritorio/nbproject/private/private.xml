@@ -5,23 +5,31 @@
         <group>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/RegistroPacienteFuncionario.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/ManejadorPacienteFuncionario.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Hora.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/ServicioDAO.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/DiaDAO.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Eliminacion.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/BoletaDAO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/BoletaDTO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/SecuenciaDAO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Secuencia.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/MisServicios.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/HoraDAO.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/EmisorBoletaServicio.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Registro.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/ItinerarioHoras.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/VerHora.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/TipoProductoDAO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/FuncionarioDAO.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/AgendarHora.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/HoraDTO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/UsuarioDTO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/VentanaPrincipal.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/PacienteDAO.java</file>
-            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/DiaDTO.java</file>
             <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Lista.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/ProveedorDAO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/ManejadorProveedores.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/ManejadorUsuarios.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/SolicitudesBodega.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/PacienteDTO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/ManejadorProductos.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/EmisorBoletaServicio.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/controlador/Registro.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/FamiliaProductoDAO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/UsuarioGenerado.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/ProveedorDTO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/modelo/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Marco%20Antonio/Desktop/Portafolio%20de%20titulo/PortafolioEscritorio/OdontologicaEscritorio/src/odontologicaescritorio/vista/EnviarSolicitudBodega.java</file>
         </group>
     </open-files>
 </project-private>
