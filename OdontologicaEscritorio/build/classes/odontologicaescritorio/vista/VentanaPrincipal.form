@@ -112,10 +112,13 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_producto.png"/>
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_carta.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Enviar solicitudes a log&#xed;stica"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -195,10 +198,13 @@
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_informacion.png"/>
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_carta.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Solicitudes a bodega"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem10ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
               <Properties>
@@ -476,7 +482,7 @@
                       <Component id="lblSolicitudesBodega" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnCerrarSesion2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -494,7 +500,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_dialogo.png"/>
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_carta.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Solicitudes a bodega"/>
                 <Property name="iconTextGap" type="int" value="0"/>
@@ -503,15 +509,18 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblSolicitudesBodega">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_carta.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="(Mensaje de n&#xfa;mero de solicitudes)"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnCerrarSesion2">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_ingresar.png"/>
+                  <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_enviar.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Abrir manejador de solicitudes"/>
+                <Property name="text" type="java.lang.String" value="Abrir bandeja de solicitudes"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCerrarSesion2ActionPerformed"/>

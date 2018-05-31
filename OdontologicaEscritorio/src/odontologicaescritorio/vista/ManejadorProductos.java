@@ -16,6 +16,7 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
     private ArrayList<FamiliaProductoDTO> listaFamilias;
     private ArrayList<TipoProductoDTO> listaTipoProducto;
     private ArrayList<ProductoDTO> listaProductos;
+    private ArrayList<ProveedorDTO> listaProveedores = new Lista().listarProveedores();
     /**
      * Creates new form ManejadorProductos
      */
@@ -26,6 +27,9 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         actualizarTablaProducto();
         actualizarTablaTipo();
         actualizarCboTipo(cboFamiliaProducto, cboTipoProducto);
+        for(ProveedorDTO proveedor : listaProveedores){
+            cboProveedores.addItem(proveedor.getId() + " - " + proveedor.getNombreEmpresa());
+        }
     }
     
     public void actualizarComponentesFamilia(){

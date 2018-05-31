@@ -1,6 +1,7 @@
 package odontologicaescritorio.controlador;
 import java.util.ArrayList;
 import odontologicaescritorio.modelo.*;
+import odontologicaescritorio.vista.SolicitudesBodega;
 
 /**
  *
@@ -73,5 +74,9 @@ public class Lista {
     public ArrayList<ProductoDTO> listaProductos(){
         ArrayList<ProductoDTO> listaProductos = new ProductoDAO().obtenerTodosLosProductosBD();
         return listaProductos;       
-    }     
+    }
+    
+    public ArrayList<PedidoBodegaDTO> listaSolicitudesBodega(){
+        return new PedidoBodegaDAO().obtenerTodosLosPedidosBD();
+    }
 }

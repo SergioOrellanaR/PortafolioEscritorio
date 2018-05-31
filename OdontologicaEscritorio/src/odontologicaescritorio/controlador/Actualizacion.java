@@ -13,4 +13,8 @@ public class Actualizacion {
     public String actualizarPermisosUsuario(int id, int administrador, int odontologo, int recepcionista, int bodega, int cliente){
         return new UsuarioDAO().modificarPermisos(id, administrador, odontologo, recepcionista, bodega, cliente);
     }
+    
+    public String actualizarEstadoSolicitud(int id, int estado){
+        return new PedidoBodegaDAO().actualizarEstado(id, estado);
+    }
 }

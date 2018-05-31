@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
-
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import odontologicaescritorio.modelo.*;
+import odontologicaescritorio.controlador.*;
 /**
  *
  * @author Marco Antonio
@@ -14,10 +18,31 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
     /**
      * Creates new form SolicitudesBodega
      */
+    private ArrayList<PedidoBodegaDTO> listaPedidosBodega;
     public SolicitudesBodega() {
         initComponents();
+        actualizarBandejaSolicitudes();
     }
-
+    
+    public void actualizarBandejaSolicitudes(){
+        listaPedidosBodega = new Lista().listaSolicitudesBodega();
+        String[] columnas = {"Id","Fecha", "Emisor", "Estado"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        
+        for(PedidoBodegaDTO pedido : listaPedidosBodega){
+            String id            = String.valueOf(pedido.getId());
+            String descripcion   = pedido.getFecha().toString();
+            String emisor        = pedido.getRutEmisor().split("-")[1].substring(1, pedido.getRutEmisor().split("-")[1].length());
+            String estado;
+            if(pedido.getEstado() == 0)
+                estado = "<html><body bgcolor='#ffba4c'><b>En espera</b></body></html>";
+            else
+                estado = "<html><body bgcolor='#bbff56'><b>Respondida</b></body></html>";
+            Object[] elemento = {id, descripcion, emisor, estado};
+            modeloTabla.addRow(elemento);
+        };
+        tblSolicitudes.setModel(modeloTabla); 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,39 +54,60 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txtDescripcion = new javax.swing.JTextArea();
+        btnEspera = new javax.swing.JButton();
+        btnRespondida = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lblEstado = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblIdSolicitud = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tblSolicitudes = new javax.swing.JTable();
+        btnVerSolicitud = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(139, 156, 168));
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Bandeja de solicitudes");
-        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_dialogo.png"))); // NOI18N
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_carta.png"))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(218, 210, 226));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtDescripcion.setEditable(false);
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setRows(5);
+        jScrollPane1.setViewportView(txtDescripcion);
 
-        jButton2.setText("No respondida");
+        btnEspera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_desactivar.png"))); // NOI18N
+        btnEspera.setText("En espera");
+        btnEspera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsperaActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Respondida");
+        btnRespondida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_activar.png"))); // NOI18N
+        btnRespondida.setText("Respondida");
+        btnRespondida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRespondidaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Estado actual:");
 
         lblEstado.setText("-");
 
         jLabel2.setText("Cambiar estado:");
+
+        jLabel3.setText("ID Solicitud:");
+
+        lblIdSolicitud.setText("-");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -75,23 +121,32 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblEstado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btnRespondida)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(btnEspera))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblIdSolicitud)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblIdSolicitud))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(btnEspera)
+                    .addComponent(btnRespondida)
                     .addComponent(jLabel1)
                     .addComponent(lblEstado)
                     .addComponent(jLabel2))
@@ -101,7 +156,7 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(218, 210, 226));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -112,14 +167,20 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblSolicitudes);
 
-        jButton1.setText("Ver solicitud");
+        btnVerSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
+        btnVerSolicitud.setText("Ver solicitud");
+        btnVerSolicitud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerSolicitudActionPerformed(evt);
+            }
+        });
 
         jLabel8.setBackground(new java.awt.Color(146, 128, 183));
         jLabel8.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_dialogo.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_carta.png"))); // NOI18N
         jLabel8.setText("Bandeja de solicitudes a bodega");
         jLabel8.setIconTextGap(0);
         jLabel8.setOpaque(true);
@@ -133,8 +194,8 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+                        .addComponent(btnVerSolicitud))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -144,9 +205,9 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVerSolicitud)
                 .addContainerGap())
         );
 
@@ -174,20 +235,47 @@ public class SolicitudesBodega extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnVerSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerSolicitudActionPerformed
+        int fila = tblSolicitudes.getSelectedRow();
+        int id  = Integer.parseInt(String.valueOf(tblSolicitudes.getValueAt(fila, 0)));
+        lblIdSolicitud.setText(String.valueOf(id));
+        for(PedidoBodegaDTO pedido : listaPedidosBodega){
+            if(pedido.getId() == id){
+                txtDescripcion.setText(pedido.getDescripcion());
+                if(pedido.getEstado() == 0)
+                    lblEstado.setText("No respondida");
+                else
+                    lblEstado.setText("Respondida");
+            }
+        }
+    }//GEN-LAST:event_btnVerSolicitudActionPerformed
+
+    private void btnRespondidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRespondidaActionPerformed
+        JOptionPane.showMessageDialog(rootPane, new Actualizacion().actualizarEstadoSolicitud(Integer.parseInt(lblIdSolicitud.getText()), 1), "Cambio de estado", HEIGHT);
+        actualizarBandejaSolicitudes();
+    }//GEN-LAST:event_btnRespondidaActionPerformed
+
+    private void btnEsperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsperaActionPerformed
+        JOptionPane.showMessageDialog(rootPane, new Actualizacion().actualizarEstadoSolicitud(Integer.parseInt(lblIdSolicitud.getText()), 0), "Cambio de estado", HEIGHT);
+        actualizarBandejaSolicitudes();
+    }//GEN-LAST:event_btnEsperaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnEspera;
+    private javax.swing.JButton btnRespondida;
+    private javax.swing.JButton btnVerSolicitud;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblIdSolicitud;
+    private javax.swing.JTable tblSolicitudes;
+    private javax.swing.JTextArea txtDescripcion;
     // End of variables declaration//GEN-END:variables
 }

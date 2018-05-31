@@ -54,7 +54,7 @@ public class TipoProductoDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT TIPO_PRODUCTO.ID, TIPO_PRODUCTO.DESCRIPCION, TIPO_PRODUCTO.ID_FAMILIA ||' - '|| FAMILIA.DESCRIPCION FROM TIPO_PRODUCTO JOIN FAMILIA_PRODUCTO ON (TIPO_PRODUCTO.ID_FAMILIA = FAMILIA_PRODUCTO.ID) WHERE FAMILIA_PRODUCTO.ID = " + id);
+            ResultSet resultado = declaracion.executeQuery("SELECT TIPO_PRODUCTO.ID, TIPO_PRODUCTO.DESCRIPCION, TIPO_PRODUCTO.ID_FAMILIA ||' - '|| FAMILIA_PRODUCTO.DESCRIPCION FROM TIPO_PRODUCTO JOIN FAMILIA_PRODUCTO ON (TIPO_PRODUCTO.ID_FAMILIA = FAMILIA_PRODUCTO.ID) WHERE FAMILIA_PRODUCTO.ID = " + id);
             while (resultado.next()) {
                 this.setId(resultado.getInt(1));
                 this.setDescripcion(resultado.getString(2));

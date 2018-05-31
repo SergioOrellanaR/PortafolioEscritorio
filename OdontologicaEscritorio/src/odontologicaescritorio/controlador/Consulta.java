@@ -27,4 +27,8 @@ public class Consulta {
     public PacienteDTO obtenerPaciente(int rut){
         return new PacienteDAO().obtenerPacienteBD(rut);
     }
+    
+    public int solicitudesPendientesBodega(){
+        return new PedidoBodegaDAO().obtenerNumeroSolicitudesPendientesBD();
+    }    
 }

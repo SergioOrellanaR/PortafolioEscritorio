@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import odontologicaescritorio.modelo.*;
+import odontologicaescritorio.vista.SolicitudesBodega;
 
 /**
  *
@@ -40,5 +41,9 @@ public class Registro {
     
    public String registrarProveedorBD(String nombreEmpresa, int rutEmpresa, char dvEmpresa, int telefono, String email, String nombreRepresentante, int rutRepresentante, char dvRepresentante, String idRubro){
         return new ProveedorDAO(0, nombreEmpresa, rutEmpresa, dvEmpresa, telefono, email, nombreRepresentante, rutRepresentante, dvRepresentante, idRubro).registrarProveedorBD();
-    }     
+   }
+   
+   public String registrarSolicitudBodegaBD(String descripcion, LocalDate fecha, int rutEmisor){
+       return new PedidoBodegaDAO(0, descripcion, fecha, "0", 0).registrarPedidoBD(rutEmisor);
+   }
 }
