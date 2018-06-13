@@ -190,13 +190,13 @@ public class PacienteDAO implements DatosConexion{
         }
     }
     
-    public String registrarPacienteBD(){
+    public String registrarPacienteBD(String nombreUsuario){
         int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);
         try{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             //Statement declaracion = conexion.createStatement();
-            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )}");
+            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + ",'" + nombreUsuario + "')}");
             procedimientoAlmacenado.execute();
             //declaracion.executeUpdate("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
             conexion.close();
@@ -204,24 +204,20 @@ public class PacienteDAO implements DatosConexion{
         }catch(Exception e){
             return "Error en registro de paciente: " + e;
         }
-    }
+    }    
     
-// EJEMPLO DE PROCEDIMIENTO ALMACENADO
-//    public String registrarPacienteBD(){
-//        int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);
-//        try{
-//            Class.forName(DRIVER);
-//            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
-//            //Statement declaracion = conexion.createStatement();
-//            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )}");
-//            procedimientoAlmacenado.execute();
-//            //declaracion.executeUpdate("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
-//            conexion.close();
-//            return "El registro del paciente y su usuario en la base de datos fue exitoso.";
-//        }catch(Exception e){
-//            return "Error en registro de paciente: " + e;
-//        }
-//    }    
+    public String actualizarVulnerabilidadBD(int rut, int porcentaje){
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            declaracion.executeUpdate("UPDATE CLIENTE SET VULNERABLE = " + porcentaje + " WHERE CLIENTE.RUT = " + rut);
+            conexion.close();
+            return "Se ha actualizado registro de vulnerabilidad del paciente " + rut + " a un índice de " + porcentaje + "%";
+        }catch(Exception e){
+            return "Error la actualización de vulnerabilidad del paciente: " + e;
+        }
+    }     
     
     public int buscarPacienteBD(int rut){
         int contador = 0;

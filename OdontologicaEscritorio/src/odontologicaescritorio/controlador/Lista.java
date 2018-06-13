@@ -79,4 +79,8 @@ public class Lista {
     public ArrayList<PedidoBodegaDTO> listaSolicitudesBodega(){
         return new PedidoBodegaDAO().obtenerTodosLosPedidosBD();
     }
+    
+    public ArrayList<OrdenPedidoDTO> listaOrdenesPedido(){
+        return new OrdenPedidoDAO().obtenerTodasLasOrdenesPedidoBD();
+    }
 }

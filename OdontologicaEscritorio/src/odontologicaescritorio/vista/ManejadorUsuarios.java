@@ -33,14 +33,13 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
 
     public void actualizarListaUsuarios(){
         listaUsuarios = new Lista().listarUsuarios();
-        String[] columnas = {"RUT","ID", "Nombre"};
+        String[] columnas = {"ID", "Nombre"};
         DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
         
         for(UsuarioDTO usuario : listaUsuarios){
-            String rut      = String.valueOf(usuario.getRut_persona());
             String id       = String.valueOf(usuario.getId());
             String nombre   = usuario.getNombre();
-            Object[] elemento = {rut, id, nombre};
+            Object[] elemento = {id, nombre};
             modeloTabla.addRow(elemento);
         };
         tblPacientes.setModel(modeloTabla);
@@ -141,7 +140,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
 
         jLabel32.setBackground(new java.awt.Color(204, 255, 204));
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_lupa.png"))); // NOI18N
-        jLabel32.setText("Buscar por RUT (Ingrese sin DV):");
+        jLabel32.setText("Buscar por nombre de usuario:");
         jLabel32.setIconTextGap(0);
         jLabel32.setOpaque(true);
 
@@ -369,7 +368,7 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -389,10 +388,10 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarRUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRUTActionPerformed
-        int rutBuscar = Integer.parseInt(txtRutBusqueda.getText());
+        String nombreBuscar = txtRutBusqueda.getText();
         for(int i = 0; i < tblPacientes.getRowCount(); i++){
-            int rutSeleccionado  = Integer.parseInt(String.valueOf(tblPacientes.getValueAt(i, 0)).split("-")[0]);
-            if(rutSeleccionado == rutBuscar){
+            String nombreSeleccionado  = String.valueOf(tblPacientes.getValueAt(i, 0)).split("-")[0];
+            if(nombreSeleccionado.equals(nombreBuscar)){
                 tblPacientes.setRowSelectionInterval(i, i);
                 JOptionPane.showConfirmDialog(rootPane, "Se ha encontrado y seleccionado la incidencia.", "Usuario encontrado", WIDTH);
                 return;

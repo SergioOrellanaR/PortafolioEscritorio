@@ -5,6 +5,7 @@
  */
 package odontologicaescritorio.vista;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import odontologicaescritorio.modelo.*;
 import odontologicaescritorio.controlador.*;
@@ -547,6 +548,11 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         btnEditarDatosTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
         btnEditarDatosTipo.setText("Editar datos de tipo");
         btnEditarDatosTipo.setEnabled(false);
+        btnEditarDatosTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarDatosTipoActionPerformed(evt);
+            }
+        });
 
         btnCancelarTipoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
         btnCancelarTipoProducto.setText("Cancelar");
@@ -847,15 +853,37 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    boolean estaEditando;
     private void btnCargarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarProductoActionPerformed
-        if(!estaEditando){
+        int fila = tblProductos.getSelectedRow();
+        int id  = Integer.parseInt(String.valueOf(tblProductos.getValueAt(fila, 0)));
+        
+        for(ProductoDTO producto : listaProductos){
+            if(producto.getId() == id){
+                //lblModoProducto.setText("Usted está en modo de edición.");
+                //lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));        
+                btnEditarDatosProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));    
+                lblIdProducto.setText(String.valueOf(producto.getId()));
+                txtNombreProducto.setText(producto.getNombre());
+                cboFamiliaProducto.setSelectedItem(producto.getIdFamilia());
+                cboProveedores.setSelectedItem(producto.getIdProveedor());
+                cboTipoProducto.setSelectedItem(producto.getIdTipo());
+                txtPrecioCompra.setText(String.valueOf(producto.getPrecioCompra()));
+                txtPrecioVenta.setText(String.valueOf(producto.getPrecioVenta()));
+                btnEditarDatosProducto.setEnabled(true);            
+                btnCancelarProducto.setEnabled(true);            
+            }
+        }
+
+    }//GEN-LAST:event_btnCargarProductoActionPerformed
+
+    boolean estaRegistrando = false;
+    private void btnEditarDatosProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosProductoActionPerformed
         lblModoProducto.setText("Usted está en modo de edición.");
         lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));        
         btnEditarDatosProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));    
-        estaEditando = true;
         txtNombreProducto.setEditable(true);
         cboProveedores.setEnabled(true);
+        cboFamiliaProducto.setEnabled(true);
         cboTipoProducto.setEnabled(true);
         txtPrecioCompra.setEditable(true);
         txtPrecioVenta.setEditable(true);
@@ -864,32 +892,14 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         btnRegistrarProducto.setEnabled(false);            
         btnCancelarProducto.setEnabled(true);
         btnEditarDatosProducto.setEnabled(true);
-        }else{
-        lblModoProducto.setText("Usted está en modo de vista.");
-        lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));        
-        btnEditarDatosProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));              
-        estaEditando = false;
-        txtNombreProducto.setEditable(false);
-        cboProveedores.setEnabled(false);
-        cboTipoProducto.setEnabled(false);
-        txtPrecioCompra.setEditable(false);
-        txtPrecioVenta.setEditable(false);
-        tblProductos.setEnabled(true);
-        btnCargarProducto.setEnabled(true);
-        btnRegistrarProducto.setEnabled(true);      
-        btnCancelarProducto.setEnabled(false);
-        btnEditarDatosProducto.setEnabled(false);
+        
+        if(estaRegistrando){
+            JOptionPane.showMessageDialog(rootPane, new Registro().registrarProductoBD(txtNombreProducto.getText(), Integer.parseInt(txtPrecioCompra.getText()), Integer.parseInt(txtPrecioVenta.getText()), String.valueOf(cboProveedores.getSelectedItem()), String.valueOf(cboTipoProducto.getSelectedItem()), String.valueOf(cboFamiliaProducto.getSelectedItem())), "Registro de producto", HEIGHT);
+            actualizarTablaProducto();
         }
-
-    }//GEN-LAST:event_btnCargarProductoActionPerformed
-
-    private void btnEditarDatosProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosProductoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarDatosProductoActionPerformed
 
-    boolean estaRegistrando = false;
     private void btnRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProductoActionPerformed
-        if(!estaRegistrando){
             estaRegistrando = true;
             lblModoProducto.setText("Usted está en modo de registro.");
             lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
@@ -900,42 +910,26 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
             cboFamiliaProducto.setEnabled(true);
             cboTipoProducto.setEnabled(true);
             txtPrecioCompra.setEditable(true);
+            txtPrecioCompra.setText("");
             txtPrecioVenta.setEditable(true);
+            txtPrecioVenta.setText("");
             tblProductos.setEnabled(false);
             btnCargarProducto.setEnabled(false);
             btnRegistrarProducto.setEnabled(false);         
             btnCancelarProducto.setEnabled(true);
             btnEditarDatosProducto.setEnabled(true);
-        }else{
-            estaRegistrando = false;
-            lblModoProducto.setText("Usted está en modo vista.");
-            lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn.ver.png")));
-            btnEditarDatosProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); 
-            btnEditarDatosProducto.setText("Editar datos del producto");
-            txtNombreProducto.setEditable(false);
-            cboProveedores.setEnabled(false);
-            cboFamiliaProducto.setEnabled(false);
-            cboTipoProducto.setEnabled(false);
-            txtPrecioCompra.setEditable(false);
-            txtPrecioVenta.setEditable(false);
-            tblProductos.setEnabled(true);
-            btnCargarProducto.setEnabled(true);
-            btnRegistrarProducto.setEnabled(true); 
-            btnCancelarProducto.setEnabled(false);
-            btnEditarDatosProducto.setEnabled(false);
-        }
     }//GEN-LAST:event_btnRegistrarProductoActionPerformed
 
     private void btnCancelarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarProductoActionPerformed
         // TODO add your handling code here:
         estaRegistrando = false;
-        estaEditando = false;
         lblModoProducto.setText("Usted está en modo de vista.");
         lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));
         btnEditarDatosProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); 
         btnEditarDatosProducto.setText("Editar datos del producto");
         txtNombreProducto.setEditable(false);
         cboProveedores.setEnabled(false);
+        cboFamiliaProducto.setEnabled(false);
         cboTipoProducto.setEnabled(false);
         txtPrecioCompra.setEditable(false);
         txtPrecioVenta.setEditable(false);
@@ -946,25 +940,19 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         btnEditarDatosProducto.setEnabled(false);
     }//GEN-LAST:event_btnCancelarProductoActionPerformed
 
-    boolean estaRegistrandoTipo = false;
     private void btnRegistrarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarTipoActionPerformed
-        if(!estaRegistrandoTipo){
-            estaRegistrando = true;
-            lblModoTipo.setText("Usted está en modo de registro.");
-            lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
-            txtDescripcionTipo.setEditable(true);
-            cboFamiliaTipo.setEnabled(true);
-            btnEditarDatosTipo.setEnabled(true);
-            btnCancelarTipoProducto.setEnabled(true);    
-            btnEditarDatosTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
-            btnEditarDatosTipo.setText("Confirmar registro");
-        }
+        estaRegistrandoTipo = true;
+        lblModoTipo.setText("Usted está en modo de registro.");
+        lblModoProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
+        txtDescripcionTipo.setEditable(true);
+        cboFamiliaTipo.setEnabled(true);
+        btnEditarDatosTipo.setEnabled(true);
+        btnCancelarTipoProducto.setEnabled(true);    
+        btnEditarDatosTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
+        btnEditarDatosTipo.setText("Confirmar registro");
     }//GEN-LAST:event_btnRegistrarTipoActionPerformed
 
-    boolean estaEditandoTipo = false;
     private void btnCargarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarTipoActionPerformed
-        if(!estaEditandoTipo){
-            estaRegistrando = true;
             lblModoTipo.setText("Usted está en modo de edición.");
             lblModoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
             txtDescripcionTipo.setEditable(true);
@@ -973,21 +961,9 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
             btnCancelarTipoProducto.setEnabled(true);    
             btnEditarDatosTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
             btnEditarDatosTipo.setText("Confirmar edición");
-        }else{
-            estaEditandoTipo = false;
-            lblModoTipo.setText("Usted está en modo de vista.");
-            lblModoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));            
-            txtDescripcionTipo.setEditable(false);
-            cboFamiliaTipo.setEnabled(false);
-            btnEditarDatosTipo.setEnabled(false);
-            btnCancelarTipoProducto.setEnabled(false);    
-            btnEditarDatosTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
-            btnEditarDatosTipo.setText("Editar datos de tipo");            
-        }
     }//GEN-LAST:event_btnCargarTipoActionPerformed
 
     private void btnCancelarTipoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarTipoProductoActionPerformed
-            estaEditandoTipo = false;
             lblModoTipo.setText("Usted está en modo de vista.");
             lblModoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));            
             txtDescripcionTipo.setEditable(false);
@@ -1000,21 +976,28 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
 
     boolean estaRegistrandoFamilia = false;
     private void btnRegistrarFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarFamiliaActionPerformed
-        // TODO add your handling code here:
-        if(!estaRegistrandoFamilia){
-            lblModoTipo.setText("Usted está en modo de registro.");
-            lblModoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));            
-            estaRegistrandoFamilia = true;
-            btnEditarDatosFamilia.setEnabled(true);
-            txtDescripcionFamilia.setEditable(true);
-            btnCancelarFamiliaProducto.setEnabled(true);
-            btnEditarDatosFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
-            btnEditarDatosFamilia.setText("Confirmar registro");
-        }
+        estaRegistrandoFamilia = true;
+        lblModoTipo.setText("Usted está en modo de registro.");
+        lblModoTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));            
+        estaRegistrandoFamilia = true;
+        btnEditarDatosFamilia.setEnabled(true);
+        txtDescripcionFamilia.setEditable(true);
+        txtDescripcionFamilia.setText("");
+        btnCancelarFamiliaProducto.setEnabled(true);
+        btnEditarDatosFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));
+        btnEditarDatosFamilia.setText("Confirmar registro");
     }//GEN-LAST:event_btnRegistrarFamiliaActionPerformed
 
     private void btnCargarFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarFamiliaActionPerformed
-        // TODO add your handling code here:
+        int fila = tblFamilias.getSelectedRow();
+        int id  = Integer.parseInt(String.valueOf(tblFamilias.getValueAt(fila, 0)));
+        
+        for(FamiliaProductoDTO familia : listaFamilias){
+            if(familia.getId() == id){
+                lblIdFamilia.setText(String.valueOf(familia.getId()));
+                txtDescripcionFamilia.setText(familia.getDescripcion());
+            }
+        }
     }//GEN-LAST:event_btnCargarFamiliaActionPerformed
 
     private void btnCancelarFamiliaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarFamiliaProductoActionPerformed
@@ -1028,32 +1011,35 @@ public class ManejadorProductos extends javax.swing.JInternalFrame {
         lblModoFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));            
     }//GEN-LAST:event_btnCancelarFamiliaProductoActionPerformed
 
-    boolean estaEditandoFamilia = false;
     private void btnEditarDatosFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosFamiliaActionPerformed
-        if(!estaEditandoFamilia){
-            lblModoFamilia.setText("Usted está en modo de edición.");
-            lblModoFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));                        
-            estaEditandoFamilia = true;
-            btnEditarDatosFamilia.setEnabled(true);
-            txtDescripcionFamilia.setEditable(true);
-            btnCancelarFamiliaProducto.setEnabled(true);
-            btnEditarDatosFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
-            btnEditarDatosFamilia.setText("Confirmar edición");            
-        }else{
-            lblModoFamilia.setText("Usted está en modo de vista.");
-            lblModoFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));                                    
-            estaEditandoFamilia = false;
-            btnEditarDatosFamilia.setEnabled(false);
-            txtDescripcionFamilia.setEditable(false);
-            btnCancelarFamiliaProducto.setEnabled(false);
-            btnEditarDatosFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
-            btnEditarDatosFamilia.setText("Editar datos de familia");            
+        lblModoFamilia.setText("Usted está en modo de edición.");
+        lblModoFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png")));                        
+        btnEditarDatosFamilia.setEnabled(true);
+        txtDescripcionFamilia.setEditable(true);
+        btnCancelarFamiliaProducto.setEnabled(true);
+        btnEditarDatosFamilia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
+        btnEditarDatosFamilia.setText("Confirmar edición");      
+        
+        if(estaRegistrandoFamilia){
+            JOptionPane.showMessageDialog(rootPane, new Registro().registrarFamiliaProductoBD(txtDescripcionFamilia.getText()), "Registro de familia de producto", HEIGHT);
+            actualizarTablaFamilia();
+            actualizarComponentesFamilia();
         }
     }//GEN-LAST:event_btnEditarDatosFamiliaActionPerformed
 
     private void cboFamiliaProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboFamiliaProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboFamiliaProductoActionPerformed
+
+    boolean estaRegistrandoTipo = false;
+    private void btnEditarDatosTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosTipoActionPerformed
+        txtDescripcionTipo.setEditable(true);
+        cboFamiliaTipo.setEnabled(true);
+        if(estaRegistrandoTipo){
+            JOptionPane.showMessageDialog(rootPane, new Registro().registrarTipoProductoBD(txtDescripcionTipo.getText(), String.valueOf(cboFamiliaTipo.getSelectedItem())), "Registro de tipo de producto", HEIGHT);
+            actualizarTablaTipo();
+        }
+    }//GEN-LAST:event_btnEditarDatosTipoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

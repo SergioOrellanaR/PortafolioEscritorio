@@ -96,8 +96,6 @@ public class UsuarioDAO implements DatosConexion{
             ResultSet resultado = declaracion.executeQuery("SELECT ID FROM USUARIO");
             while (resultado.next()) {
                 listaUsuarios.add(obtenerUsuarioPorIdBD(resultado.getInt(1)));
-                System.out.println("RESULTADO: " + resultado.getInt(1));
-                System.out.println("Usuario agregado correctamente: " + obtenerUsuarioPorIdBD(resultado.getInt(1)).getRut_persona());
             }
             conexion.close();
         }catch(Exception e){
@@ -111,14 +109,14 @@ public class UsuarioDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT USUARIO.ID, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.ID_PREGUNTA, USUARIO.RESP_PREGUNTA, PERSONA.RUT FROM USUARIO JOIN FUNCIONARIO ON (FUNCIONARIO.ID_USUARIO = USUARIO.ID) WHERE USUARIO.ID = " + id);
+            ResultSet resultado = declaracion.executeQuery("SELECT USUARIO.ID, USUARIO.NOMBRE, USUARIO.CLAVE, USUARIO.ID_PREGUNTA, USUARIO.RESP_PREGUNTA FROM USUARIO WHERE USUARIO.ID = " + id);
             while (resultado.next()) {
                 this.setId(resultado.getInt(1));
                 this.setNombre(resultado.getString(2));
                 this.setClave(resultado.getString(3));
                 this.setId_pregunta(resultado.getInt(4));
                 this.setRespuesta(resultado.getString(5));
-                this.setRut_persona(Integer.parseInt(resultado.getString(6)));
+                this.setRut_persona(0);
             }
             //Obtener permisos
             resultado = declaracion.executeQuery("SELECT ID_PERMISO FROM PERMISO_USUARIO WHERE ID_USUARIO = " + id);

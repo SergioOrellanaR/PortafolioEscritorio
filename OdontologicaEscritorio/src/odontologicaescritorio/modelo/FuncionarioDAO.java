@@ -252,14 +252,14 @@ public class FuncionarioDAO implements DatosConexion{
         }  
     }     
     
-    public String registrarFuncionarioBD(){
+    public String registrarFuncionarioBD(String nombreUsuario){
         int idComuna = Integer.parseInt(this.getComuna().split(" ")[0]);
         int idTipoFuncionario = Integer.parseInt(this.getTipoFuncionario().split(" ")[0]);
         try{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             //Statement declaracion = conexion.createStatement();
-            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_FUNCYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + "," + idTipoFuncionario + ")}");
+            CallableStatement procedimientoAlmacenado = conexion.prepareCall("{CALL PRC_REG_FUNCYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + "," + idTipoFuncionario + ",'" + nombreUsuario + "')}");
             procedimientoAlmacenado.execute();
             //declaracion.executeUpdate("EXEC PRC_REG_CLIENTEYUSUARIO (" + this.getRut() + ",'"+ this.getDv() + "','" + this.getP_nombre() + "','" + this.getS_nombre() + "','" + this.getP_apellido() + "','" + this.getS_apellido() + "', TO_DATE('" + getF_nacimiento().toString() + "', 'YYYY-MM-DD'),'" + this.getSexo() + "','" + this.getDireccion() + "'," + this.getTelefono() + " ,'" + this.getEmail() + "'," + idComuna + " )");
             conexion.close();

@@ -112,5 +112,19 @@ public class ProductoDAO implements DatosConexion{
             System.out.println("Error : " + e);
             return listaProductos;
         }
+    } 
+    
+    public String registrarProductoBD(){
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            declaracion.executeUpdate("INSERT INTO PRODUCTO(PRODUCTO.ID, PRODUCTO.NOMBRE, PRODUCTO.PRECIO_COMPRA, PRODUCTO.PRECIO_VENTA, PRODUCTO.ID_PROVEEDOR, PRODUCTO.ID_TIPOPRODUCTO) VALUES (SEQ_ID_PRODUCTO.NEXTVAL,'" + this.getNombre() + "'," + this.getPrecioCompra() + ", " + this.getPrecioVenta() + "," + this.getIdProveedor().split("-")[0] + "," + this.getIdTipo().split("-")[0] + ")");
+            conexion.close();
+            return "Registro de producto en la base de datos fue exitoso.";
+        }catch(Exception e){
+            System.out.println("Error : " + e);
+            return "No se pudo registrar producto en base de datos: " + e;
+        }        
     }    
 }

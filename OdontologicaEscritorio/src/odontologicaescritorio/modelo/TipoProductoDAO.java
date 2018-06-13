@@ -88,7 +88,7 @@ public class TipoProductoDAO implements DatosConexion{
         }
     }    
     
-    public String registrarServicioBD(){
+    public String registrarTipoBD(){
         try{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);

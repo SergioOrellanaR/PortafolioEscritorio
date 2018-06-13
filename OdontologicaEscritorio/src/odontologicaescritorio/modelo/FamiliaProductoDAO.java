@@ -58,7 +58,7 @@ public class FamiliaProductoDAO implements DatosConexion{
         }
     }
     
-    public String registrarServicioBD(){
+    public String registrarFamiliaBD(){
         try{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);

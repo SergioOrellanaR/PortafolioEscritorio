@@ -92,6 +92,9 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         panelTipoFuncionario = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         cboTipoFuncionario = new javax.swing.JComboBox<>();
+        panelTipoFuncionario1 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        txtNombreUsuario = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -369,7 +372,39 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        panelTipoFuncionario1.setBackground(new java.awt.Color(218, 210, 226));
+        panelTipoFuncionario1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel18.setBackground(new java.awt.Color(146, 128, 183));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pc.png"))); // NOI18N
+        jLabel18.setText("Nombre de usuario");
+        jLabel18.setIconTextGap(0);
+        jLabel18.setOpaque(true);
+
+        javax.swing.GroupLayout panelTipoFuncionario1Layout = new javax.swing.GroupLayout(panelTipoFuncionario1);
+        panelTipoFuncionario1.setLayout(panelTipoFuncionario1Layout);
+        panelTipoFuncionario1Layout.setHorizontalGroup(
+            panelTipoFuncionario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTipoFuncionario1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelTipoFuncionario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                    .addComponent(txtNombreUsuario))
+                .addContainerGap())
+        );
+        panelTipoFuncionario1Layout.setVerticalGroup(
+            panelTipoFuncionario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTipoFuncionario1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -383,7 +418,8 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel33, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                     .addComponent(btnFinalizarRegistroPaciente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelTipoFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelTipoFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTipoFuncionario1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -391,10 +427,12 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 449, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panelTipoFuncionario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnFinalizarRegistroPaciente)))
@@ -430,7 +468,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                             Integer.parseInt(txtDia.getText()));
                     char sexo = String.valueOf(cboSexo.getSelectedItem()).charAt(0);          
                     JOptionPane.showMessageDialog(rootPane,
-                            new Registro().registrarFuncionarioYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()), String.valueOf(cboTipoFuncionario.getSelectedItem()))
+                            new Registro().registrarFuncionarioYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()), String.valueOf(cboTipoFuncionario.getSelectedItem()), txtNombreUsuario.getText())
                             ,
                             "Registro completado", HEIGHT);
                 }                
@@ -443,7 +481,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
                             Integer.parseInt(txtDia.getText()));
                     char sexo = String.valueOf(cboSexo.getSelectedItem()).charAt(0);          
                     JOptionPane.showMessageDialog(rootPane,
-                            new Registro().registrarPacienteYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()), 0)
+                            new Registro().registrarPacienteYUsuarioBD(Integer.parseInt(txtRUT.getText()), String.valueOf(cboDV.getSelectedItem()).charAt(0), txtPNombre.getText(), txtSNombre.getText(), txtPApellido.getText(), txtSApellido.getText(), fechaNacimiento, sexo, txtDireccion.getText(), Integer.parseInt(txtTelefono.getText()), txtEmail.getText(), String.valueOf(cboComuna.getSelectedItem()), String.valueOf(cboCiudad.getSelectedItem()), 0, txtNombreUsuario.getText())
                             ,
                             "Registro completado", HEIGHT);
                 }
@@ -573,6 +611,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
@@ -587,10 +626,12 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblNoticiaFun;
     private javax.swing.JPanel panelTipoFuncionario;
+    private javax.swing.JPanel panelTipoFuncionario1;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtDia;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombreUsuario;
     private javax.swing.JTextField txtPApellido;
     private javax.swing.JTextField txtPNombre;
     private javax.swing.JTextField txtRUT;
