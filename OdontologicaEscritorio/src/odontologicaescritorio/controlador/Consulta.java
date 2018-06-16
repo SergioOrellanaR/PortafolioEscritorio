@@ -31,4 +31,12 @@ public class Consulta {
     public int solicitudesPendientesBodega(){
         return new PedidoBodegaDAO().obtenerNumeroSolicitudesPendientesBD();
     }    
+    
+    public int consultarMesAnoAgenda(int mes, int ano, int rutFuncionario){
+        return new DiaDAO().existeMesBD(mes, ano, rutFuncionario);
+    } 
+    
+    public String pacienteDeHora(int idHora){
+        return new HoraDAO().pacineteDeHoraBD(idHora);
+    }    
 }

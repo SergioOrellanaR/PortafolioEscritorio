@@ -19,18 +19,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     private FuncionarioDTO funcionarioSesion;
     private UsuarioDTO usuarioSesion;
-    public VentanaPrincipal(FuncionarioDTO funcionarioSesion, UsuarioDTO usuarioSesion) {
+    private Login ventanaPadre;
+    public VentanaPrincipal(FuncionarioDTO funcionarioSesion, UsuarioDTO usuarioSesion, Login ventanaPadre) {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         this.funcionarioSesion = funcionarioSesion;
         this.usuarioSesion = usuarioSesion;
+        this.ventanaPadre = ventanaPadre;
         pnlSolicitudesBodega.setVisible(false);
         confirmarPermisos();
         lblFuncionarioConectado.setText(lblFuncionarioConectado.getText() + " " + funcionarioSesion.getRut() + " - " + funcionarioSesion.getDv() + " / " + funcionarioSesion.getP_nombre() + " " + funcionarioSesion.getP_apellido());
-    
-        ItinerarioHoras itinerarioHoras = new ItinerarioHoras(19516774,"Marco Medina" , 1, 2018,0);
-        panelEscritorio.add(itinerarioHoras);
-        itinerarioHoras.setVisible(true);
     }
     
     public void confirmarPermisos(){
@@ -75,13 +73,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         lblFuncionarioConectado = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        btnCerrarSesion = new javax.swing.JButton();
+        btnCambiarSesion = new javax.swing.JButton();
         chkPermisoAdministrador = new javax.swing.JCheckBox();
         chkPermisoOdontologo = new javax.swing.JCheckBox();
         chkPermisoRecepcionista = new javax.swing.JCheckBox();
         chkPermisoLogistica = new javax.swing.JCheckBox();
         chkPermisoCliente = new javax.swing.JCheckBox();
-        btnVerMiPerfil = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
         pnlSolicitudesBodega = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         lblSolicitudesBodega = new javax.swing.JLabel();
@@ -95,9 +93,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         mnuRecepcion = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -132,11 +128,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel8.setIconTextGap(0);
         jLabel8.setOpaque(true);
 
-        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ingresar.png"))); // NOI18N
-        btnCerrarSesion.setText("Cerrar sesión");
-        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+        btnCambiarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_refrezcar.png"))); // NOI18N
+        btnCambiarSesion.setText("Cambiar sesión");
+        btnCambiarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarSesionActionPerformed(evt);
+                btnCambiarSesionActionPerformed(evt);
             }
         });
 
@@ -155,8 +151,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         chkPermisoCliente.setText("Cliente");
         chkPermisoCliente.setEnabled(false);
 
-        btnVerMiPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
-        btnVerMiPerfil.setText("Ver mi perfil personal");
+        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
+        btnCerrarSesion.setText("Cerrar sesión");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,7 +180,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(chkPermisoCliente))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnVerMiPerfil)
+                        .addComponent(btnCambiarSesion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCerrarSesion)))
                 .addGap(0, 200, Short.MAX_VALUE))
@@ -201,8 +202,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(lblFuncionarioConectado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCerrarSesion)
-                    .addComponent(btnVerMiPerfil))
+                    .addComponent(btnCambiarSesion)
+                    .addComponent(btnCerrarSesion))
                 .addGap(13, 13, 13))
         );
 
@@ -315,18 +316,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         mnuOdontologia.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
-        jMenu2.setText("Sistema de horas");
-
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
         jMenuItem6.setText("Mi agenda de horas");
-        jMenu2.add(jMenuItem6);
-
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
-        jMenuItem7.setText("Planificar mis horas");
-        jMenu2.add(jMenuItem7);
-
-        mnuOdontologia.add(jMenu2);
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        mnuOdontologia.add(jMenuItem6);
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_carta.png"))); // NOI18N
         jMenuItem11.setText("Enviar solicitudes a bodega");
@@ -367,6 +364,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
         jMenuItem13.setText("Agenda de horas");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         mnuRecepcion.add(jMenuItem13);
 
         barraMenu.add(mnuRecepcion);
@@ -429,13 +431,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        ManejadorPacienteFuncionario manejadorPacientes = new ManejadorPacienteFuncionario(1, 1);
+        ManejadorPacienteFuncionario manejadorPacientes = new ManejadorPacienteFuncionario(1, 1, this.funcionarioSesion);
         panelEscritorio.add(manejadorPacientes);
         manejadorPacientes.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        ManejadorPacienteFuncionario manejadorPacientes = new ManejadorPacienteFuncionario(2, 1);
+        ManejadorPacienteFuncionario manejadorPacientes = new ManejadorPacienteFuncionario(2, 1, this.funcionarioSesion);
         panelEscritorio.add(manejadorPacientes);
         manejadorPacientes.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -448,14 +450,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        ManejadorPacienteFuncionario manejadorPacientes = new ManejadorPacienteFuncionario(0, 0);
+        ManejadorPacienteFuncionario manejadorPacientes = new ManejadorPacienteFuncionario(0, 0, this.funcionarioSesion);
         panelEscritorio.add(manejadorPacientes);
         manejadorPacientes.setVisible(true);        
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+    private void btnCambiarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarSesionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+        this.ventanaPadre.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCambiarSesionActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
@@ -485,7 +489,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void btnCerrarSesion2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesion2ActionPerformed
-        // TODO add your handling code here:
+        SolicitudesBodega solicitudesBodega = new SolicitudesBodega();
+        panelEscritorio.add(solicitudesBodega);
+        solicitudesBodega.setVisible(true); 
     }//GEN-LAST:event_btnCerrarSesion2ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
@@ -512,11 +518,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         manejadorOrdenesPedido.setVisible(true); 
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        SeleccionarMesAgenda seleccionarMesAgenda = new SeleccionarMesAgenda(1, funcionarioSesion);
+        panelEscritorio.add(seleccionarMesAgenda);
+        seleccionarMesAgenda.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        SeleccionarMesAgenda seleccionarMesAgenda = new SeleccionarMesAgenda(0, funcionarioSesion);
+        panelEscritorio.add(seleccionarMesAgenda);
+        seleccionarMesAgenda.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        this.ventanaPadre.dispose();
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
+    private javax.swing.JButton btnCambiarSesion;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCerrarSesion2;
-    private javax.swing.JButton btnVerMiPerfil;
     private javax.swing.JCheckBox chkPermisoAdministrador;
     private javax.swing.JCheckBox chkPermisoCliente;
     private javax.swing.JCheckBox chkPermisoLogistica;
@@ -526,7 +550,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -539,7 +562,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;

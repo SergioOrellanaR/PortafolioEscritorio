@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import odontologicaescritorio.modelo.*;
+import odontologicaescritorio.controlador.*;
 
 /**
  *
@@ -14,8 +18,29 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
     /**
      * Creates new form SeleccionarMesAgenda
      */
-    public SeleccionarMesAgenda() {
+    private ArrayList<FuncionarioDTO> listaFuncionarios = new Lista().listarFuncionariosPorTipo(1);
+    
+    //Tipo acceso 0 - Recepcionista.
+    //Tipo acceso 1 - Odontologo.
+    private int tipoAcceso;
+    public SeleccionarMesAgenda(int tipoAcceso, FuncionarioDTO funcionarioSesion) {
         initComponents();
+        this.tipoAcceso = tipoAcceso;
+        switch(this.tipoAcceso){
+            case 0:
+                actualizarCboFuncionarios();
+                btnPlanificarMes.setVisible(false);
+                break;
+            case 1:
+                cboFuncionario.addItem(funcionarioSesion.getRut() + " - " + funcionarioSesion.getP_nombre() + " " + funcionarioSesion.getP_apellido());
+                break;
+        }
+    }
+    
+    public void actualizarCboFuncionarios(){
+        for(FuncionarioDTO funcionario : listaFuncionarios){
+            cboFuncionario.addItem(funcionario.getRut() + " - " + funcionario.getP_nombre() + " " + funcionario.getP_apellido());
+        }
     }
 
     /**
@@ -34,12 +59,13 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        btnPlanificarMes = new javax.swing.JButton();
+        btnVerAgenda = new javax.swing.JButton();
+        spnMes = new javax.swing.JSpinner();
+        spnAno = new javax.swing.JSpinner();
 
         setBackground(new java.awt.Color(139, 156, 168));
+        setClosable(true);
         setTitle("Consulta de agendas");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
         setName(""); // NOI18N
@@ -68,15 +94,25 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
         jLabel9.setIconTextGap(0);
         jLabel9.setOpaque(true);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
-        jButton1.setText("Planificar mes");
+        btnPlanificarMes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
+        btnPlanificarMes.setText("Planificar mes");
+        btnPlanificarMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlanificarMesActionPerformed(evt);
+            }
+        });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
-        jButton2.setText("Ver agenda");
+        btnVerAgenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
+        btnVerAgenda.setText("Ver agenda");
+        btnVerAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerAgendaActionPerformed(evt);
+            }
+        });
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMes.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
 
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(2000, 2000, 2999, 1));
+        spnAno.setModel(new javax.swing.SpinnerNumberModel(2000, 2000, 2999, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,19 +129,19 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSpinner1))
+                                    .addComponent(spnMes))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnPlanificarMes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVerAgenda)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -120,18 +156,18 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
                     .addComponent(cboFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnPlanificarMes)
+                    .addComponent(btnVerAgenda))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -155,18 +191,42 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnPlanificarMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlanificarMesActionPerformed
+        // TODO add your handling code here:
+        if(new Consulta().consultarMesAnoAgenda(Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())), Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0])) == 0){
+            javax.swing.JDesktopPane panelEscritorio = this.getDesktopPane();
+            PlanificarMes planificarMes = new PlanificarMes(Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0]), Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())));
+            panelEscritorio.add(planificarMes);
+            planificarMes.setVisible(true); 
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "El mes seleccionado ya está planificado.", "Planificación de mes", HEIGHT);
+        }
+    
+    }//GEN-LAST:event_btnPlanificarMesActionPerformed
+
+    private void btnVerAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAgendaActionPerformed
+        if(!(new Consulta().consultarMesAnoAgenda(Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())), Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0])) <= 0)){
+            javax.swing.JDesktopPane panelEscritorio = this.getDesktopPane();
+            ItinerarioHoras itinerarioHoras = new ItinerarioHoras(Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0]), String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[2], Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())), this.tipoAcceso);
+            panelEscritorio.add(itinerarioHoras);
+            itinerarioHoras.setVisible(true); 
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "El mes seleccionado no está planificado.", "Planificación de mes", HEIGHT);
+        }
+    }//GEN-LAST:event_btnVerAgendaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPlanificarMes;
+    private javax.swing.JButton btnVerAgenda;
     private javax.swing.JComboBox<String> cboFuncionario;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner spnAno;
+    private javax.swing.JSpinner spnMes;
     // End of variables declaration//GEN-END:variables
 }

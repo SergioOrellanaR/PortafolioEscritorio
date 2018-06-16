@@ -62,4 +62,8 @@ public class Registro {
    public String registrarOrdenPedidoBD(String id, int cantidad, int estado, String idProducto){
        return new OrdenPedidoDAO(id, cantidad, estado, idProducto).registrarOrdenPedidoBD();
    }
+   
+   public String registrarBitacoraoBD(String descripcion, LocalDate fecha, int rutFuncionario, int rutCliente){
+       return new BitacoraDAO(0, descripcion, LocalDate.MIN, rutFuncionario, rutCliente).registrarBitacoraBD();
+   }
 }

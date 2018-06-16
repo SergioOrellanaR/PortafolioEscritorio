@@ -83,4 +83,8 @@ public class Lista {
     public ArrayList<OrdenPedidoDTO> listaOrdenesPedido(){
         return new OrdenPedidoDAO().obtenerTodasLasOrdenesPedidoBD();
     }
+    
+    public ArrayList<BitacoraDTO> listaBitacorasPorRut(int rutPaciente){
+        return new BitacoraDAO().obtenerBitacorasPorRutClienteBD(rutPaciente);
+    }    
 }

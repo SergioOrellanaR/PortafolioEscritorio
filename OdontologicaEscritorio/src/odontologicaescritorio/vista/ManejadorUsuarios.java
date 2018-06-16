@@ -403,14 +403,14 @@ public class ManejadorUsuarios extends javax.swing.JInternalFrame {
     private void btnVerUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerUsuarioActionPerformed
         // TODO add your handling code here:
         int fila = tblPacientes.getSelectedRow();
-        int rut  = Integer.parseInt(String.valueOf(tblPacientes.getValueAt(fila, 0)).split("-")[0]);
+        String nombreUsuario = String.valueOf(tblPacientes.getValueAt(fila, 1));
         chkUsuarioAdministrador.setSelected(false);    
         chkUsuarioOdontologo.setSelected(false);
         chkUsuarioRecepcionista.setSelected(false);
         chkUsuarioLogistica.setSelected(false);
         chkUsuarioCliente.setSelected(false);
         for(UsuarioDTO usuario : listaUsuarios){
-            if(usuario.getRut_persona() == rut){
+            if(usuario.getNombre().equals(nombreUsuario)){
                 txtNombreUsuario.setText(usuario.getNombre());
                 lblIdUsuario.setText(String.valueOf(usuario.getId()));
                 lblRutPersona.setText(String.valueOf(usuario.getRut_persona()));

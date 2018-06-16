@@ -122,4 +122,24 @@ public class DiaDAO implements DatosConexion{
         }
         return total;  
     }
+    
+    public int existeMesBD(int mes, int ano, int rut){
+        int cantidad = -1;
+        try{
+            
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            ResultSet resultado = declaracion.executeQuery("SELECT COUNT(DIA) FROM DIA WHERE LTRIM(TO_CHAR(DIA, 'MM'), '0') = " + mes + " AND TO_CHAR(DIA, 'YYYY') = " + ano + " AND RUT_FUNCIONARIO = " + rut);
+            while (resultado.next()) {
+                cantidad = resultado.getInt(1);
+                System.out.println("Incidencias de mes consultado: " + cantidad);
+            }
+            conexion.close();
+            return cantidad;
+        }catch(Exception e){
+            System.out.println("Error en verificación de dia en BD: " + e);
+            return cantidad;
+        }
+    }    
 }

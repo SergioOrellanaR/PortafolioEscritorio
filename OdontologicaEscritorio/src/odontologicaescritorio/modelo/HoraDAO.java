@@ -91,6 +91,24 @@ public class HoraDAO implements DatosConexion{
         }
         return listaHoras;
     }
+    
+     public String pacineteDeHoraBD(int id){
+        String pacienteHora = "----";
+        try{
+            Class.forName(DRIVER);
+            Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
+            Statement declaracion = conexion.createStatement();
+            ResultSet resultado = declaracion.executeQuery("SELECT HORA.RUT_CLIENTE ||' - '|| CLIENTE.P_NOMBRE||' '||CLIENTE.P_APELLIDO FROM HORA JOIN CLIENTE ON (CLIENTE.RUT = HORA.RUT_CLIENTE)");
+            while (resultado.next()) {
+                pacienteHora = resultado.getString(1);
+            }
+            conexion.close();
+            return pacienteHora;
+        }catch(Exception e){
+            System.out.println("Error en obtención de paciente de hora desde BD: " + e);
+        }
+        return pacienteHora;
+    }   
 
     public String registrarHoraBD(){
         String fechaFormateada = String.format("%d-%d-%d:%d:%d:00", this.getFecha().getYear(), this.getFecha().getMonthValue(), this.getFecha().getDayOfMonth(), this.getHora().getHour(), this.getHora().getMinute());

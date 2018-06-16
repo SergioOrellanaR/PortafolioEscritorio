@@ -213,8 +213,10 @@ public class Login extends javax.swing.JFrame {
             FuncionarioDTO funcionarioSesion = new FuncionarioDAO().obtenerFuncionarioBD(usuarioSesion.getRut_persona());
             System.out.println("FUNCIONARIO CARGADO EN LOGIN: " + funcionarioSesion.getRut());
             System.out.println("USUARIO CARGADO EN LOGIN: " + usuarioSesion.getRut_persona());
-            new VentanaPrincipal(funcionarioSesion, usuarioSesion).show();
-            this.dispose();
+            new VentanaPrincipal(funcionarioSesion, usuarioSesion, this).show();
+            this.setVisible(false);
+            txtNombreUsuario.setText("");
+            txtClaveUsuario.setText("");
         }else{
             JOptionPane.showMessageDialog(rootPane, "Usted ha ingresado un usuario o contraseña incorrectos, intente nuevamente.", "Acceso denegado", HEIGHT);
         }

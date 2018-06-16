@@ -66,6 +66,7 @@ public class OrdenPedidoDAO implements DatosConexion{
             Statement declaracion = conexion.createStatement();
             declaracion.executeUpdate("INSERT INTO ORDEN_PEDIDO (ID, CANTIDAD, ID_PRODUCTO, ESTADO) VALUES ('" + this.getId() + "'," + this.getCantidad() + ",'" + this.getIdProducto().split(" ")[0] + "'," + this.getEstado() + ")");
             conexion.close();
+            System.out.println("INSERT INTO ORDEN_PEDIDO (ID, CANTIDAD, ID_PRODUCTO, ESTADO) VALUES ('" + this.getId() + "'," + this.getCantidad() + ",'" + this.getIdProducto().split(" ")[0] + "'," + this.getEstado() + ")");
             return "Registro de orden en la base de datos fue exitoso.";
         }catch(Exception e){
             System.out.println("Error : " + e);

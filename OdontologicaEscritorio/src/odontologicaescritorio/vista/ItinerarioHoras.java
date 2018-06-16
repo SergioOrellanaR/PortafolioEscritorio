@@ -28,6 +28,10 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
     private int ano;
     private int modoAcceso;
     private String matriz[][];
+    
+    //Modo acceso:
+    //0 - Recepcionista
+    //1 - Odontologo
     public ItinerarioHoras(int rutOdontologo, String nombreOdontologo, int mes, int ano, int modoAcceso) {
         initComponents();
         String meses[] = new String[]{"Indefinido", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
@@ -42,6 +46,11 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         lblNombreOdontologo.setText(nombreOdontologo);
         
         cargarDatosItinerario();
+        
+        if(modoAcceso == 1){
+            btnAgendarHora.setEnabled(false);
+            btnCancelarHora.setEnabled(false);
+        }
     }
     
     public void cargarDatosItinerario(){
@@ -276,6 +285,11 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
         jButton4.setText("Ver hora seleccionada");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -385,6 +399,19 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Para cancelar una hora, seleccione una celda que no esté vacía.", "Hora vacía", HEIGHT);
         }       
     }//GEN-LAST:event_btnCancelarHoraActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int fila = tblHorario.getSelectedRow();
+        int columa = tblHorario.getSelectedColumn();
+        int idHora = Integer.valueOf(String.valueOf(tblHorario.getValueAt(fila, columa)).split(" ")[2]);
+        String hora = String.valueOf(tblHorario.getValueAt(fila, 0));
+        int dia = Integer.parseInt(tblHorario.getColumnName(columa));
+        javax.swing.JDesktopPane panelEscritorio = this.getDesktopPane();
+        VerHora verHora = new VerHora(idHora, dia ,mes, ano, hora);
+        panelEscritorio.add(verHora);
+        verHora.setVisible(true);           
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

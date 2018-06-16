@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -22,17 +23,21 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
      */
     private ArrayList<PacienteDTO> listaPacientes;
     private ArrayList<FuncionarioDTO> listaFuncionarios;
+    private ArrayList<BitacoraDTO> listaBitacoras;
     private int nivelAcceso;
     private int modoManejador;
     private int nivelVulnerabilidad = 25;
+    private FuncionarioDTO funcionarioSesion;
+    private int rutPacienteCargado;
     
     //modoManejador determina qué tipo de persona se está manejando:
     // 0 - Se están manejando personas de tipo funcionario.
     // 1 - Se están manejando personas de tipo paciente.
-    public ManejadorPacienteFuncionario(int nivelAcceso, int modoManejador) {
+    public ManejadorPacienteFuncionario(int nivelAcceso, int modoManejador, FuncionarioDTO funcionarioSesion) {
         initComponents();
         poblarCboCiudades();
         poblarCboComunas();
+        this.funcionarioSesion = funcionarioSesion;
         
         this.nivelAcceso = nivelAcceso;
         this.modoManejador = modoManejador;
@@ -42,12 +47,13 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 btnEditarDatosPaciente.setVisible(true);
                 break;
             case 1:
-                tbDatosPersonas.remove(pnlDatosUsuario);
                 btnRegistrarPaciente.setVisible(false);
                 btnEditarDatosPaciente.setVisible(false);
+                btnIngresarBitacora.setVisible(false);
                 break;
             case 2:
                 btnEditarDatosPaciente.setVisible(true);
+                btnModificar.setEnabled(true);
                 break;
             case 3:
                 this.dispose();
@@ -61,6 +67,8 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
             case 0:
                 lblListaPersonas.setText("Lista de funcionarios");
                 btnRegistrarPaciente.setText("Registrar nuevo funcionario");
+                tbDatosPersonas.remove(1);
+                tbDatosPersonas.remove(1);
                 this.setTitle("Manejo de funcionarios");
                 actualizarListaFuncionarios();
                 break;
@@ -117,6 +125,20 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         };
         tblPacientes.setModel(modeloTabla);        
     };
+    
+    public void actualizarBitacoras(int rutPaciente){
+        listaBitacoras = new Lista().listaBitacorasPorRut(rutPaciente);
+        String[] columnas = {"Fecha", "Descripcion"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        
+        for(BitacoraDTO bitacora : listaBitacoras){
+            String fecha         = bitacora.getFecha().toString();
+            String descripcion   = bitacora.getDescripcion();
+            Object[] elemento    = {fecha, descripcion};
+            modeloTabla.addRow(elemento);
+        };
+        tblBitacoras.setModel(modeloTabla);        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -174,15 +196,25 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         lblTipoFuncionario = new javax.swing.JLabel();
         cboTipoFuncionario = new javax.swing.JComboBox<>();
         lblModo = new javax.swing.JLabel();
-        pnlDatosUsuario = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         pnlBitacoraPaciente = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        txtBitacora = new javax.swing.JTextField();
+        lblListaPersonas1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblBitacoras = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        btnVerBitacora = new javax.swing.JButton();
+        btnIngresarBitacora = new javax.swing.JButton();
+        lblIdBitacora = new javax.swing.JLabel();
+        lblFunBitacora = new javax.swing.JLabel();
+        lblFechaBitacora = new javax.swing.JLabel();
+        pnlSocioeconomica = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         barVulnerabilidad = new javax.swing.JProgressBar();
         jLabel14 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        Modificar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         spnVulnerabilidad = new javax.swing.JSpinner();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -407,6 +439,11 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         lblTipoFuncionario.setText("Tipo de funcionario:");
 
@@ -564,47 +601,132 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addGroup(pnlDatosPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarDatosPaciente)
                     .addComponent(btnCancelar))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         tbDatosPersonas.addTab("Datos de la persona", pnlDatosPaciente);
 
-        jLabel1.setText("(Datos de Usuario)");
+        pnlBitacoraPaciente.setBackground(new java.awt.Color(218, 210, 226));
+        pnlBitacoraPaciente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        javax.swing.GroupLayout pnlDatosUsuarioLayout = new javax.swing.GroupLayout(pnlDatosUsuario);
-        pnlDatosUsuario.setLayout(pnlDatosUsuarioLayout);
-        pnlDatosUsuarioLayout.setHorizontalGroup(
-            pnlDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDatosUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(348, Short.MAX_VALUE))
-        );
-        pnlDatosUsuarioLayout.setVerticalGroup(
-            pnlDatosUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDatosUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        lblListaPersonas1.setBackground(new java.awt.Color(146, 128, 183));
+        lblListaPersonas1.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblListaPersonas1.setForeground(new java.awt.Color(255, 255, 255));
+        lblListaPersonas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_dialogo.png"))); // NOI18N
+        lblListaPersonas1.setText("Bitácora de atenciones");
+        lblListaPersonas1.setOpaque(true);
 
-        tbDatosPersonas.addTab("Datos del usuario", pnlDatosUsuario);
+        tblBitacoras.setBackground(new java.awt.Color(204, 255, 204));
+        tblBitacoras.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Fecha", "Descripcion"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblBitacoras);
+
+        jLabel1.setText("ID:");
+
+        jLabel21.setText("Funcionario:");
+
+        jLabel23.setText("Fecha:");
+
+        btnVerBitacora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
+        btnVerBitacora.setText("Ver");
+        btnVerBitacora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerBitacoraActionPerformed(evt);
+            }
+        });
+
+        btnIngresarBitacora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_agregar.png"))); // NOI18N
+        btnIngresarBitacora.setText("Ingresar");
+        btnIngresarBitacora.setEnabled(false);
+        btnIngresarBitacora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarBitacoraActionPerformed(evt);
+            }
+        });
+
+        lblIdBitacora.setText("---");
+
+        lblFunBitacora.setText("---");
+
+        lblFechaBitacora.setText("---");
 
         javax.swing.GroupLayout pnlBitacoraPacienteLayout = new javax.swing.GroupLayout(pnlBitacoraPaciente);
         pnlBitacoraPaciente.setLayout(pnlBitacoraPacienteLayout);
         pnlBitacoraPacienteLayout.setHorizontalGroup(
             pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 448, Short.MAX_VALUE)
+            .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblListaPersonas1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                    .addComponent(txtBitacora)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                        .addGroup(pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblIdBitacora))
+                            .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFunBitacora))
+                            .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblFechaBitacora))
+                            .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                                .addComponent(btnVerBitacora)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnIngresarBitacora)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         pnlBitacoraPacienteLayout.setVerticalGroup(
             pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
+            .addGroup(pnlBitacoraPacienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblListaPersonas1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblIdBitacora))
+                .addGap(3, 3, 3)
+                .addGroup(pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(lblFunBitacora))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(lblFechaBitacora))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBitacora, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBitacoraPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVerBitacora)
+                    .addComponent(btnIngresarBitacora))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tbDatosPersonas.addTab("Bitácora de atenciones", pnlBitacoraPaciente);
 
-        jPanel2.setBackground(new java.awt.Color(218, 210, 226));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlSocioeconomica.setBackground(new java.awt.Color(218, 210, 226));
+        pnlSocioeconomica.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -640,11 +762,12 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         jLabel18.setIconTextGap(0);
         jLabel18.setOpaque(true);
 
-        Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_avanzar.png"))); // NOI18N
-        Modificar.setText("Modificar");
-        Modificar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_avanzar.png"))); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModificarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
 
@@ -677,32 +800,32 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlSocioeconomicaLayout = new javax.swing.GroupLayout(pnlSocioeconomica);
+        pnlSocioeconomica.setLayout(pnlSocioeconomicaLayout);
+        pnlSocioeconomicaLayout.setHorizontalGroup(
+            pnlSocioeconomicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSocioeconomicaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlSocioeconomicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSocioeconomicaLayout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(spnVulnerabilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlSocioeconomicaLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnlSocioeconomicaLayout.setVerticalGroup(
+            pnlSocioeconomicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSocioeconomicaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -710,17 +833,17 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Modificar)
+                .addGroup(pnlSocioeconomicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnModificar)
                     .addComponent(spnVulnerabilidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
                     .addComponent(jLabel20))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
-        tbDatosPersonas.addTab("Situación socioeconómica", jPanel2);
+        tbDatosPersonas.addTab("Situación socioeconómica", pnlSocioeconomica);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -739,7 +862,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tbDatosPersonas)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -751,7 +874,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
         );
 
         pack();
@@ -805,6 +928,9 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                         cboMes.setSelectedIndex(paciente.getF_nacimiento().getMonthValue() - 1);
                         //Actualizar índice de vulnerabilidad
                         barVulnerabilidad.setValue(paciente.getVulnerable());
+                        //Cargar bitacora.
+                        actualizarBitacoras(paciente.getRut());
+                        this.rutPacienteCargado = paciente.getRut();
                     }
                 }
                 break;
@@ -832,59 +958,6 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRegistrarPacienteActionPerformed
     
     boolean estaEditando = false;
-    private void btnEditarDatosPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosPacienteActionPerformed
-        // TODO add your handling code here:
-        if(!estaEditando){
-            btnCancelar.setEnabled(true);
-            lblModo.setText("Usted está en modo edición.");
-            lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
-            estaEditando = true;
-            txtRUT.setEditable(true);
-            txtPNombre.setEditable(true);
-            txtSNombre.setEditable(true);
-            txtPApellido.setEditable(true);
-            txtSApellido.setEditable(true);
-            txtDireccion.setEditable(true);
-            txtTelefono.setEditable(true);
-            txtEmail.setEditable(true);
-            cboComuna.setEnabled(true);
-            cboSexo.setEnabled(true);
-            cboDv.setEnabled(true);
-            btnRegistrarPaciente.setEnabled(false);
-            btnCargarFichaPaciente.setEnabled(false);
-            tblPacientes.setEnabled(false);   
-            btnBuscarRUT.setEnabled(false);
-            txtRutBusqueda.setEditable(false);            
-            btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
-            btnEditarDatosPaciente.setText("Guardar cambios");
-        }else{
-            if(validarFormularios()){
-                JOptionPane.showMessageDialog(rootPane, "Se han actualizado correctamente los datos del paciente.", "Registro completado", HEIGHT);
-            }
-            lblModo.setText("Usted está en modo vista.");
-            lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));            
-            estaEditando = false;
-            txtRUT.setEditable(false);
-            txtPNombre.setEditable(false);
-            txtSNombre.setEditable(false);
-            txtPApellido.setEditable(false);
-            txtSApellido.setEditable(false);
-            txtDireccion.setEditable(false);
-            txtTelefono.setEditable(false);
-            txtEmail.setEditable(false);
-            cboComuna.setEnabled(false);
-            cboSexo.setEnabled(false);
-            cboDv.setEnabled(false);
-            btnBuscarRUT.setEnabled(true);
-            txtRutBusqueda.setEditable(true);            
-            btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
-            btnEditarDatosPaciente.setText("Editar datos personales");
-            btnRegistrarPaciente.setEnabled(true);
-            btnCargarFichaPaciente.setEnabled(true);
-            tblPacientes.setEnabled(true);
-        }
-    }//GEN-LAST:event_btnEditarDatosPacienteActionPerformed
-
     private boolean validarFormularios(){
         if(txtRUT.getText().length() == 0){
             JOptionPane.showMessageDialog(rootPane, "El RUT no puede estar vacío.", "Ha ingresado mal un dato", HEIGHT);
@@ -987,10 +1060,6 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         return false;
     }
     
-    private void txtSNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSNombreActionPerformed
-
     private void btnBuscarRUTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarRUTActionPerformed
         int rutBuscar = Integer.parseInt(txtRutBusqueda.getText());
         for(int i = 0; i < tblPacientes.getRowCount(); i++){
@@ -1004,20 +1073,106 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(rootPane, "La busqueda no arrojó resultados.", "Paciente no encontrado", WIDTH);
     }//GEN-LAST:event_btnBuscarRUTActionPerformed
 
-    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         barVulnerabilidad.setValue(Integer.parseInt(spnVulnerabilidad.getValue().toString()));
         JOptionPane.showMessageDialog(rootPane, new Actualizacion().actualizarVulnerabilidadPaciente(Integer.parseInt(txtRUT.getText()), Integer.parseInt(spnVulnerabilidad.getValue().toString())), "Actualización de estado de vulnerabilidad", HEIGHT);
-    }//GEN-LAST:event_ModificarActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEditarDatosPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDatosPacienteActionPerformed
+        // TODO add your handling code here:
+        if(!estaEditando){
+            btnCancelar.setEnabled(true);
+            lblModo.setText("Usted está en modo edición.");
+            lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+            estaEditando = true;
+            txtRUT.setEditable(true);
+            txtPNombre.setEditable(true);
+            txtSNombre.setEditable(true);
+            txtPApellido.setEditable(true);
+            txtSApellido.setEditable(true);
+            txtDireccion.setEditable(true);
+            txtTelefono.setEditable(true);
+            txtEmail.setEditable(true);
+            cboMes.setEnabled(true);
+            cboCiudad.setEnabled(true);
+            cboTipoFuncionario.setEnabled(true);
+            cboComuna.setEnabled(true);
+            cboSexo.setEnabled(true);
+            cboDv.setEnabled(true);
+            btnRegistrarPaciente.setEnabled(false);
+            btnCargarFichaPaciente.setEnabled(false);
+            tblPacientes.setEnabled(false);
+            btnBuscarRUT.setEnabled(false);
+            txtRutBusqueda.setEditable(false);
+            btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_guardar.png")));
+            btnEditarDatosPaciente.setText("Guardar cambios");
+        }else{
+            if(validarFormularios()){
+                JOptionPane.showMessageDialog(rootPane, "Se han actualizado correctamente los datos del paciente.", "Registro completado", HEIGHT);
+            }
+
+        }
+    }//GEN-LAST:event_btnEditarDatosPacienteActionPerformed
+
+    private void txtSNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSNombreActionPerformed
+
+    private void btnVerBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerBitacoraActionPerformed
+        int fila = tblBitacoras.getSelectedRow();
+        BitacoraDTO bitacoraVista = listaBitacoras.get(fila);
+        txtBitacora.setText(bitacoraVista.getDescripcion());
+        lblFechaBitacora.setText(bitacoraVista.getFecha().toString());
+        lblFunBitacora.setText(String.valueOf(bitacoraVista.getRutFuncionario()));
+        lblIdBitacora.setText(String.valueOf(bitacoraVista.getId()));
+    }//GEN-LAST:event_btnVerBitacoraActionPerformed
+
+    private void btnIngresarBitacoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarBitacoraActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(rootPane, new Registro().registrarBitacoraoBD(txtBitacora.getText(), LocalDate.now(), funcionarioSesion.getRut(), rutPacienteCargado), "Registro de bitácoras", HEIGHT);
+    }//GEN-LAST:event_btnIngresarBitacoraActionPerformed
+    
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        estaEditando = false;
+        lblModo.setText("Usted está en modo vista.");
+        lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png")));
+        estaEditando = false;
+        txtRUT.setEditable(false);
+        txtPNombre.setEditable(false);
+        txtSNombre.setEditable(false);
+        txtPApellido.setEditable(false);
+        txtSApellido.setEditable(false);
+        txtDireccion.setEditable(false);
+        txtTelefono.setEditable(false);
+        txtEmail.setEditable(false);
+        cboMes.setEnabled(false);
+        cboTipoFuncionario.setEnabled(false);
+        cboCiudad.setEnabled(false);
+        cboComuna.setEnabled(false);
+        cboSexo.setEnabled(false);
+        cboDv.setEnabled(false);
+        btnBuscarRUT.setEnabled(true);
+        txtRutBusqueda.setEditable(true);
+        btnEditarDatosPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png")));
+        btnEditarDatosPaciente.setText("Editar datos personales");
+        btnRegistrarPaciente.setEnabled(true);
+        btnCargarFichaPaciente.setEnabled(true);
+        tblPacientes.setEnabled(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Modificar;
     private javax.swing.JProgressBar barVulnerabilidad;
     private javax.swing.JButton btnBuscarRUT;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCargarFichaPaciente;
     private javax.swing.JButton btnEditarDatosPaciente;
+    private javax.swing.JButton btnIngresarBitacora;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegistrarPaciente;
+    private javax.swing.JButton btnVerBitacora;
     private javax.swing.JComboBox<String> cboCiudad;
     private javax.swing.JComboBox<String> cboComuna;
     private javax.swing.JComboBox<String> cboDv;
@@ -1037,7 +1192,9 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
@@ -1047,21 +1204,27 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblFechaBitacora;
+    private javax.swing.JLabel lblFunBitacora;
+    private javax.swing.JLabel lblIdBitacora;
     private javax.swing.JLabel lblListaPersonas;
+    private javax.swing.JLabel lblListaPersonas1;
     private javax.swing.JLabel lblModo;
     private javax.swing.JLabel lblTipoFuncionario;
     private javax.swing.JPanel pnlBitacoraPaciente;
     private javax.swing.JPanel pnlDatosPaciente;
-    private javax.swing.JPanel pnlDatosUsuario;
+    private javax.swing.JPanel pnlSocioeconomica;
     private javax.swing.JSpinner spnVulnerabilidad;
     private javax.swing.JTabbedPane tbDatosPersonas;
+    private javax.swing.JTable tblBitacoras;
     private javax.swing.JTable tblPacientes;
     private javax.swing.JTextField txtAno;
+    private javax.swing.JTextField txtBitacora;
     private javax.swing.JTextField txtDia;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;

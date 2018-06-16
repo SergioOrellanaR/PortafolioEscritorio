@@ -433,7 +433,7 @@ private ArrayList<OrdenPedidoDTO> listaOrdenesPedido = new Lista().listaOrdenesP
             btnCancelarOrden.setEnabled(true); 
         }
         
-        if(estaEditando){
+        if(!estaEditando){
             JOptionPane.showMessageDialog(rootPane, "ASDASDASD", "Actualización de orden", HEIGHT);
             String antiguaId = lblID.getText();
             lblID.setText(generarId());
