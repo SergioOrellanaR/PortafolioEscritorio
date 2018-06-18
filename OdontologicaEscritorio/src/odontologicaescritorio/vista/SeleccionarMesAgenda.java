@@ -207,7 +207,7 @@ public class SeleccionarMesAgenda extends javax.swing.JInternalFrame {
     private void btnVerAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAgendaActionPerformed
         if(!(new Consulta().consultarMesAnoAgenda(Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())), Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0])) <= 0)){
             javax.swing.JDesktopPane panelEscritorio = this.getDesktopPane();
-            ItinerarioHoras itinerarioHoras = new ItinerarioHoras(Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0]), String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[2], Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())), this.tipoAcceso);
+            ItinerarioHoras itinerarioHoras = new ItinerarioHoras(Integer.parseInt(String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[0]), String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[2] + " " + String.valueOf(cboFuncionario.getSelectedItem()).split(" ")[3], Integer.parseInt(String.valueOf(spnMes.getValue())), Integer.parseInt(String.valueOf(spnAno.getValue())), this.tipoAcceso);
             panelEscritorio.add(itinerarioHoras);
             itinerarioHoras.setVisible(true); 
         }else{

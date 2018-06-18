@@ -13,6 +13,17 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
+
+import net.sf.nervalreports.core.ReportColors;
+import net.sf.nervalreports.core.ReportFontSize;
+import net.sf.nervalreports.core.ReportGenerationException;
+import net.sf.nervalreports.core.ReportGenerator;
+import net.sf.nervalreports.core.ReportTextAlignment;
+import net.sf.nervalreports.generators.PDFReportGenerator;
+
 /**
  *
  * @author Marco Antonio
@@ -28,13 +39,17 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
     private int ano;
     private int modoAcceso;
     private String matriz[][];
+    String meses[];
+    ArrayList<DiaDTO> listaDias;
+    ArrayList<HoraDTO> listaHoras;
+    ArrayList<String> detallesHoras;    
     
     //Modo acceso:
     //0 - Recepcionista
     //1 - Odontologo
     public ItinerarioHoras(int rutOdontologo, String nombreOdontologo, int mes, int ano, int modoAcceso) {
         initComponents();
-        String meses[] = new String[]{"Indefinido", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        meses = new String[]{"Indefinido", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         this.rutOdontologo = rutOdontologo;
         this.mes = mes;
         this.ano = ano;
@@ -55,9 +70,13 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
     
     public void cargarDatosItinerario(){
         double totalHoras = new Hora().obtenerMaximoTotalHorasJornadaBD(mes, ano);
-        ArrayList<DiaDTO> listaDias = new Hora().obtenerDiasPorFuncionario(rutOdontologo);
-        ArrayList<HoraDTO> listaHoras = new Hora().obtenerHorasPorFuncionario(rutOdontologo, mes, ano);
+        listaDias = new Hora().obtenerDiasPorFuncionario(rutOdontologo);
+        listaHoras = new Hora().obtenerHorasPorFuncionario(rutOdontologo, mes, ano);
+        detallesHoras = new ArrayList<>();
         LocalTime[] limiteHoras = new Hora().obtenerMaximoLargoJornada(mes, ano);
+        for(HoraDTO hora : listaHoras){
+            detallesHoras.add(new Consulta().pacienteDeHora(hora.getId()));
+        }
         
         for(HoraDTO hora : listaHoras){
             System.out.println(hora.getFecha() + " " + hora.getHora());
@@ -149,7 +168,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         btnAgendarHora = new javax.swing.JButton();
         btnCancelarHora = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnExportarCronograma = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setClosable(true);
@@ -280,8 +299,13 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cargarficha.png"))); // NOI18N
-        jButton3.setText("Exportar cronograma a EXCEL");
+        btnExportarCronograma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cargarficha.png"))); // NOI18N
+        btnExportarCronograma.setText("Exportar cronograma a EXCEL");
+        btnExportarCronograma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarCronogramaActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
         jButton4.setText("Ver hora seleccionada");
@@ -305,7 +329,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
                             .addComponent(btnAgendarHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExportarCronograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancelarHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 124, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -318,7 +342,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(btnExportarCronograma))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgendarHora)
@@ -413,11 +437,116 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         verHora.setVisible(true);           
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnExportarCronogramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarCronogramaActionPerformed
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        jfc.setDialogTitle("Elige un directorio para guardar tu reporte: ");
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
+        int returnValue = jfc.showSaveDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+                if (jfc.getSelectedFile().isDirectory()) {
+                        System.out.println("You selected the directory: " + jfc.getSelectedFile());
+                        PDFReportGenerator reportGenerator = new PDFReportGenerator();
+                        try {
+                                generate(reportGenerator);
+                                System.out.println("GENERADO!");
+                                reportGenerator.saveToFile(jfc.getSelectedFile() + "\\Itinerario_" + meses[mes] + "_" + ano + ".pdf");
+                                /* After the generator is no longer needed is a good practice to release it.
+                                 * Although for the tutorial is not really necessary, as we'll no longer use it anyway. */
+                                reportGenerator.release();
+                                JOptionPane.showMessageDialog(rootPane, "Se ha exportado el reporte exitosamente en el directorio seleccionado.", "Reporte generado", HEIGHT);
+                        } catch (ReportGenerationException e) {
+                                System.out.printf("Exception when generating the report: %s\n", e.getMessage());
+                        }                         
+                }
+        }       
+    }//GEN-LAST:event_btnExportarCronogramaActionPerformed
+
+    private void generate(ReportGenerator reportGenerator) throws ReportGenerationException {
+        /* Every document should begin. */
+        reportGenerator.beginDocument();
+
+        /* A document must have a head, where some things are declared, for example new colors.
+         * For now, let's just declare it without anything besides their normal behavior. */
+        reportGenerator.beginDocumentHead();
+        reportGenerator.endDocumentHead();
+
+        /* All report visible elements are inserted inside the document's body, so we must declare its block. */
+        reportGenerator.beginDocumentBody();
+
+        //Agregamos logo
+        reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
+        reportGenerator.addLinkedImage("logo_odontologica.png", 200);
+        
+        //Titulos
+        reportGenerator.setBold(true);
+        reportGenerator.addText("Itinerario de horas, " + meses[mes] + " del año " + ano + ".");
+        reportGenerator.addLineBreak();
+        reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
+        reportGenerator.setBold(true);
+        reportGenerator.addText("Odontólogo:");
+        reportGenerator.setBold(false);
+        reportGenerator.addText(lblNombreOdontologo.getText() + ", rut: " + rutOdontologo + ".");
+        reportGenerator.addLineBreak();
+        //Imprimir table
+        reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
+        reportGenerator.beginTable(matriz[0].length);
+        reportGenerator.beginTableHeaderRow();
+        reportGenerator.addTableHeaderCell("Hora/Días agendados", matriz[0].length);
+        reportGenerator.endTableHeaderRow();
+
+        //Agregamos cabecera de tabla
+        reportGenerator.beginTableHeaderRow();
+        for (int i = 0; i < matriz[0].length; i++) {
+           if(i == 0)
+               reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
+           else
+               reportGenerator.setTextAlignment(ReportTextAlignment.CENTER);
+           reportGenerator.addTableHeaderCell(matriz[0][i]); 
+        }
+        reportGenerator.endTableHeaderRow();
+        for (int y = 1; y < matriz.length; y++) {
+            reportGenerator.beginTableRow();
+            for(int x = 0; x < matriz[y].length; x++){
+                if(x > 0){
+                    reportGenerator.setTextAlignment(ReportTextAlignment.CENTER);
+                    if(matriz[y][x] == null){
+                        reportGenerator.addTableCell("-");
+                    }else{
+                        reportGenerator.setRowColor(ReportColors.GREEN);
+                        reportGenerator.addTableCell(matriz[y][x].split(" ")[2]);
+                        reportGenerator.setRowColor(null);
+                    }
+                }else{
+                    reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
+                    reportGenerator.addTableCell(matriz[y][x]);
+                }
+            }
+            reportGenerator.endTableRow();
+        }        
+        reportGenerator.endTable();
+        reportGenerator.addSeparatorLine();
+        reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
+        reportGenerator.setBold(true);
+        reportGenerator.addText("Detalle de las horas:");
+        reportGenerator.addLineBreak();
+        reportGenerator.setBold(false);
+        for(HoraDTO hora : listaHoras){
+            int contador = 0;
+            reportGenerator.addText("ID: " + hora.getId() + " - " + hora.getFecha().toString() + " - " + hora.getHora() + ": " + detallesHoras.get(contador) + ".");
+            contador++;
+        }
+
+        /* As body began, it must end. */
+        reportGenerator.endDocumentBody();
+
+        /* every document should end */
+        reportGenerator.endDocument();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgendarHora;
     private javax.swing.JButton btnCancelarHora;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnExportarCronograma;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;

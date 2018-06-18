@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import odontologicaescritorio.modelo.*;
 import odontologicaescritorio.controlador.*;
 
@@ -29,6 +31,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pnlSolicitudesBodega.setVisible(false);
         confirmarPermisos();
         lblFuncionarioConectado.setText(lblFuncionarioConectado.getText() + " " + funcionarioSesion.getRut() + " - " + funcionarioSesion.getDv() + " / " + funcionarioSesion.getP_nombre() + " " + funcionarioSesion.getP_apellido());
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/odontologicaescritorio/vista/img/icn_aplicacion.png")));
     }
     
     public void confirmarPermisos(){
@@ -90,15 +93,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         mnuOdontologia = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         mnuRecepcion = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         mnuLogistica = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -107,6 +107,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Alice: para gestión de clínica odontológica");
+        setIconImages(null);
 
         panelEscritorio.setBackground(new java.awt.Color(0, 102, 102));
 
@@ -293,29 +295,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuOdontologia.add(jMenuItem2);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
-        jMenu1.setText("Servicios");
-
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
-        jMenuItem4.setText("Manejo de servicios");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem4);
-
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
-        jMenuItem5.setText("Mis servicios");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem5);
-
-        mnuOdontologia.add(jMenu1);
-
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
         jMenuItem6.setText("Mi agenda de horas");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -348,19 +327,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuRecepcion.add(jMenuItem1);
 
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
-        jMenu3.setText("Boletas de servicio");
-
-        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_billete.png"))); // NOI18N
         jMenuItem12.setText("Emitir boleta de servicio");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem12);
+        mnuRecepcion.add(jMenuItem12);
 
-        mnuRecepcion.add(jMenu3);
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem4.setText("Manejo de servicios");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        mnuRecepcion.add(jMenuItem4);
 
         jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
         jMenuItem13.setText("Agenda de horas");
@@ -385,7 +368,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuLogistica.add(jMenuItem8);
 
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_producto.png"))); // NOI18N
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pedido.png"))); // NOI18N
         jMenuItem9.setText("Ordenes de pedido");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,7 +386,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         mnuLogistica.add(jMenuItem10);
 
-        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_servicio.png"))); // NOI18N
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_proveedor.png"))); // NOI18N
         jMenuItem14.setText("Manejo de proveedores");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -475,13 +458,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         manejadorProductos.setVisible(true);           
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        MisServicios misServicios = new MisServicios();
-        panelEscritorio.add(misServicios);
-        misServicios.setVisible(true);          
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         EmisorBoletaServicio emisorBoletaServicio = new EmisorBoletaServicio();
         panelEscritorio.add(emisorBoletaServicio);
@@ -549,8 +525,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -560,7 +534,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;

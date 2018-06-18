@@ -8,6 +8,10 @@
     <Property name="closable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
+    <Property name="title" type="java.lang.String" value="Manejador de ordenes de pedido"/>
+    <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+      <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_pedido.png"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -183,7 +187,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_persona.png"/>
+              <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_pedido.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Datos de la orden"/>
             <Property name="iconTextGap" type="int" value="0"/>
@@ -193,12 +197,7 @@
         <Component class="javax.swing.JComboBox" name="cboProducto">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -419,7 +418,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_persona.png"/>
+              <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_pedido.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Lista de &#xf3;rdenes de pedido"/>
             <Property name="iconTextGap" type="int" value="0"/>

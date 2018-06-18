@@ -119,6 +119,7 @@ public class EmisorBoletaServicio extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Emisor de boletas");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_billete.png"))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(139, 156, 168));
 

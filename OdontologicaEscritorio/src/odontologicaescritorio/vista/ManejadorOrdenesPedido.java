@@ -89,6 +89,8 @@ private ArrayList<OrdenPedidoDTO> listaOrdenesPedido = new Lista().listaOrdenesP
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Manejador de ordenes de pedido");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pedido.png"))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(218, 210, 226));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -96,12 +98,11 @@ private ArrayList<OrdenPedidoDTO> listaOrdenesPedido = new Lista().listaOrdenesP
         jLabel8.setBackground(new java.awt.Color(146, 128, 183));
         jLabel8.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_persona.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pedido.png"))); // NOI18N
         jLabel8.setText("Datos de la orden");
         jLabel8.setIconTextGap(0);
         jLabel8.setOpaque(true);
 
-        cboProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboProducto.setEnabled(false);
 
         jLabel1.setText("Producto:");
@@ -254,7 +255,7 @@ private ArrayList<OrdenPedidoDTO> listaOrdenesPedido = new Lista().listaOrdenesP
         jLabel9.setBackground(new java.awt.Color(146, 128, 183));
         jLabel9.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_persona.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_pedido.png"))); // NOI18N
         jLabel9.setText("Lista de órdenes de pedido");
         jLabel9.setIconTextGap(0);
         jLabel9.setOpaque(true);

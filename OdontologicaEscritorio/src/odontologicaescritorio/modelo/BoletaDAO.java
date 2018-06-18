@@ -72,6 +72,7 @@ public class BoletaDAO implements DatosConexion{
             conexion.close();
             return true;
         }catch(Exception e){
+            System.out.println("INSERT INTO DETALLE_BOLETA_CLI (ID_BOLETA_CLI, ID_SERVICIO, VALOR) VALUES (" + idBoleta + "," + idServicio + "," + valor + ")");
             System.out.println("Error en registro de detalle: " + e);
             return false;
         }        

@@ -44,6 +44,9 @@ public class FuncionarioDTO {
         this.tipoFuncionario = tipoFuncionario;
     }
 
+    public FuncionarioDTO() {
+    }
+
     public int getRut() {
         return rut;
     }

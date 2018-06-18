@@ -72,7 +72,7 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtNombreRepresentante = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblId = new javax.swing.JLabel();
         lblModo = new javax.swing.JLabel();
         btnEditarDatos = new javax.swing.JButton();
         btnCancelarEdicion = new javax.swing.JButton();
@@ -94,6 +94,7 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Manejo de proveedores");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_proveedor.png"))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(218, 210, 226));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -148,7 +149,7 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
 
         jLabel1.setText("ID proveedor:");
 
-        jLabel2.setText("-");
+        lblId.setText("-");
 
         lblModo.setBackground(new java.awt.Color(204, 255, 204));
         lblModo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
@@ -192,7 +193,7 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2))
+                        .addComponent(lblId))
                     .addComponent(lblModo, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -242,7 +243,7 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblId))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -416,7 +417,19 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarRUTActionPerformed
 
     private void btnCargarFichaProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarFichaProveedorActionPerformed
-
+        int fila = tblProveedores.getSelectedRow();
+        ProveedorDTO proveedor = listaProveedores.get(fila);
+        lblId.setText("" + proveedor.getId());
+        txtEmail.setText(proveedor.getEmail());
+        txtRUTProveedor.setText("" + proveedor.getRutEmpresa());
+        cboDvProveedor.setSelectedItem(proveedor.getDvEmpresa());
+        cboRubroProveedor.setSelectedItem(proveedor.getIdRubro());
+        txtNombreProveedor.setText(proveedor.getNombreEmpresa());
+        txtTelefono.setText("" + proveedor.getTelefono());
+        
+        txtRutRepresentante.setText("" + proveedor.getRutRepresentante());
+        cboDvRepresentante.setSelectedItem(proveedor.getDvRepresentante());
+        txtNombreRepresentante.setText(proveedor.getNombreRepresentante());
     }//GEN-LAST:event_btnCargarFichaProveedorActionPerformed
     boolean estaRegistrando = false;
     private void btnRegistrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProveedorActionPerformed
@@ -487,7 +500,6 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
@@ -499,6 +511,7 @@ public class ManejadorProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblListaPersonas3;
     private javax.swing.JLabel lblListaPersonas4;
     private javax.swing.JLabel lblListaPersonas5;

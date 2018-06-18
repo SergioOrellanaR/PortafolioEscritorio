@@ -897,6 +897,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                         txtTelefono.setText(String.valueOf(funcionario.getTelefono()));
                         txtEmail.setText(funcionario.getEmail());
                         txtDireccion.setText(funcionario.getDireccion());
+                        cboComuna.setSelectedItem(funcionario.getComuna());
                         if(funcionario.getSexo() == 'M' || funcionario.getSexo() == 'm') cboSexo.setSelectedIndex(0);
                         if(funcionario.getSexo() == 'F' || funcionario.getSexo() == 'f') cboSexo.setSelectedIndex(1);
                         if(funcionario.getSexo() != 'M' && funcionario.getSexo() != 'm' && funcionario.getSexo() != 'F' && funcionario.getSexo() != 'f') cboSexo.setSelectedIndex(3);
@@ -918,6 +919,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                         txtSApellido.setText(paciente.getS_apellido());
                         txtTelefono.setText(String.valueOf(paciente.getTelefono()));
                         txtEmail.setText(paciente.getEmail());
+                        cboComuna.setSelectedItem(paciente.getComuna());
                         txtDireccion.setText(paciente.getDireccion());
                         if(paciente.getSexo() == 'M' || paciente.getSexo() == 'm') cboSexo.setSelectedIndex(0);
                         if(paciente.getSexo() == 'F' || paciente.getSexo() == 'f') cboSexo.setSelectedIndex(1);

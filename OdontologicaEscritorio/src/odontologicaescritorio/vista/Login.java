@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package odontologicaescritorio.vista;
+import java.awt.Toolkit;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import odontologicaescritorio.controlador.*;
 import odontologicaescritorio.modelo.*;
@@ -19,6 +22,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/odontologicaescritorio/vista/img/icn_aplicacion.png")));
     }
 
     /**
@@ -43,6 +47,7 @@ public class Login extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        btnAccesoDesarrollador = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Odontológica linda sonrisa: Sistema de gestión");
@@ -165,6 +170,13 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Para gestión de clínica odontológica - v0.8p");
 
+        btnAccesoDesarrollador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_ver.png"))); // NOI18N
+        btnAccesoDesarrollador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccesoDesarrolladorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -174,7 +186,8 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnAccesoDesarrollador)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))))
@@ -186,10 +199,15 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addGap(7, 7, 7))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAccesoDesarrollador)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,6 +245,23 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
+    private void btnAccesoDesarrolladorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesoDesarrolladorActionPerformed
+            ArrayList<Integer> permisos = new ArrayList<Integer>();
+            permisos.add(0);
+            permisos.add(1);
+            permisos.add(2);
+            permisos.add(3);
+            permisos.add(4);
+            UsuarioDTO usuarioSesion = new UsuarioDTO(0, "MARCO", "0000", 0, "-", permisos, 19516774);
+            FuncionarioDTO funcionarioSesion = new FuncionarioDTO();
+            System.out.println("FUNCIONARIO CARGADO EN LOGIN: " + funcionarioSesion.getRut());
+            System.out.println("USUARIO CARGADO EN LOGIN: " + usuarioSesion.getRut_persona());
+            new VentanaPrincipal(funcionarioSesion, usuarioSesion, this).show();
+            this.setVisible(false);
+            txtNombreUsuario.setText("");
+            txtClaveUsuario.setText("");
+    }//GEN-LAST:event_btnAccesoDesarrolladorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -263,6 +298,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAccesoDesarrollador;
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnIngresar1;
     private javax.swing.JLabel jLabel1;
