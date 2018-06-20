@@ -135,6 +135,7 @@ public class ProveedorDAO implements DatosConexion{
                 this.setNombreRepresentante(resultado.getString(7));
                 this.setRutRepresentante(resultado.getInt(8));
                 this.setDvRepresentante(resultado.getString(9).charAt(0));   
+                this.setIdRubro(resultado.getString(10));
                 listaProveedores.add(new ProveedorDTO(this.getId(), this.getNombreEmpresa(), this.getRutEmpresa(), this.getDvEmpresa(), this.getTelefono(), this.getEmail(), this.getNombreRepresentante(), this.getRutRepresentante(), this.getDvRepresentante(), this.getIdRubro()));
             }
             conexion.close();

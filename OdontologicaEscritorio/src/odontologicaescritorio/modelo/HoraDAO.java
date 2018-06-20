@@ -98,7 +98,7 @@ public class HoraDAO implements DatosConexion{
             Class.forName(DRIVER);
             Connection conexion =  DriverManager.getConnection(URL,USUARIO,CLAVE);
             Statement declaracion = conexion.createStatement();
-            ResultSet resultado = declaracion.executeQuery("SELECT HORA.RUT_CLIENTE ||' - '|| CLIENTE.P_NOMBRE||' '||CLIENTE.P_APELLIDO FROM HORA JOIN CLIENTE ON (CLIENTE.RUT = HORA.RUT_CLIENTE)");
+            ResultSet resultado = declaracion.executeQuery("SELECT HORA.RUT_CLIENTE ||' - '|| CLIENTE.P_NOMBRE||' '||CLIENTE.P_APELLIDO FROM HORA JOIN CLIENTE ON (CLIENTE.RUT = HORA.RUT_CLIENTE) WHERE HORA.ID = " + id);
             while (resultado.next()) {
                 pacienteHora = resultado.getString(1);
             }

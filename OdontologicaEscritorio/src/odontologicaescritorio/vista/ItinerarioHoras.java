@@ -21,6 +21,7 @@ import net.sf.nervalreports.core.ReportColors;
 import net.sf.nervalreports.core.ReportFontSize;
 import net.sf.nervalreports.core.ReportGenerationException;
 import net.sf.nervalreports.core.ReportGenerator;
+import net.sf.nervalreports.core.ReportGroupType;
 import net.sf.nervalreports.core.ReportTextAlignment;
 import net.sf.nervalreports.generators.PDFReportGenerator;
 
@@ -228,7 +229,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -300,7 +301,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         });
 
         btnExportarCronograma.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_cargarficha.png"))); // NOI18N
-        btnExportarCronograma.setText("Exportar cronograma a EXCEL");
+        btnExportarCronograma.setText("Exportar cronograma a PDF");
         btnExportarCronograma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportarCronogramaActionPerformed(evt);
@@ -450,7 +451,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
                         try {
                                 generate(reportGenerator);
                                 System.out.println("GENERADO!");
-                                reportGenerator.saveToFile(jfc.getSelectedFile() + "\\Itinerario_" + meses[mes] + "_" + ano + ".pdf");
+                                reportGenerator.saveToFile(jfc.getSelectedFile() + "\\Itinerario_" + meses[mes] + "_" + ano + "_" + rutOdontologo + ".pdf");
                                 /* After the generator is no longer needed is a good practice to release it.
                                  * Although for the tutorial is not really necessary, as we'll no longer use it anyway. */
                                 reportGenerator.release();
@@ -479,15 +480,17 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         reportGenerator.addLinkedImage("logo_odontologica.png", 200);
         
         //Titulos
+        reportGenerator.beginGroup(ReportGroupType.PARAGRAPH);
         reportGenerator.setBold(true);
         reportGenerator.addText("Itinerario de horas, " + meses[mes] + " del año " + ano + ".");
         reportGenerator.addLineBreak();
         reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
         reportGenerator.setBold(true);
         reportGenerator.addText("Odontólogo:");
+        reportGenerator.addLineBreak();
         reportGenerator.setBold(false);
         reportGenerator.addText(lblNombreOdontologo.getText() + ", rut: " + rutOdontologo + ".");
-        reportGenerator.addLineBreak();
+        reportGenerator.endGroup();
         //Imprimir table
         reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
         reportGenerator.beginTable(matriz[0].length);
@@ -526,6 +529,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         }        
         reportGenerator.endTable();
         reportGenerator.addSeparatorLine();
+        reportGenerator.beginGroup(ReportGroupType.PARAGRAPH);
         reportGenerator.setTextAlignment(ReportTextAlignment.LEFT);
         reportGenerator.setBold(true);
         reportGenerator.addText("Detalle de las horas:");
@@ -538,6 +542,7 @@ public class ItinerarioHoras extends javax.swing.JInternalFrame {
         }
 
         /* As body began, it must end. */
+        reportGenerator.endGroup();
         reportGenerator.endDocumentBody();
 
         /* every document should end */
