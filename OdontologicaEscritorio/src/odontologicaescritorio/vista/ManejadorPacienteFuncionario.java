@@ -49,7 +49,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
             case 1:
                 btnRegistrarPaciente.setVisible(false);
                 btnEditarDatosPaciente.setVisible(false);
-                btnIngresarBitacora.setVisible(false);
+                btnIngresarBitacora.setEnabled(true);
                 break;
             case 2:
                 btnEditarDatosPaciente.setVisible(true);
@@ -447,7 +447,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
 
         lblTipoFuncionario.setText("Tipo de funcionario:");
 
-        cboTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - TIPOFUNCIONARIO" }));
+        cboTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - ADMINISTRADOR", "1 - ODONTÓLOGO", "3 - RECEPCIONISTA", "4 - BODEGUERO" }));
         cboTipoFuncionario.setEnabled(false);
 
         lblModo.setBackground(new java.awt.Color(204, 255, 204));
@@ -862,7 +862,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tbDatosPersonas)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -874,7 +874,7 @@ public class ManejadorPacienteFuncionario extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
         );
 
         pack();

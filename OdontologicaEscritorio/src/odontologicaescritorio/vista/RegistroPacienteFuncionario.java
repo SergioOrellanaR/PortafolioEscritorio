@@ -352,7 +352,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
         jLabel17.setIconTextGap(0);
         jLabel17.setOpaque(true);
 
-        cboTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - TIPOFUNCIONARIO" }));
+        cboTipoFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 - ADMINISTRADOR", "1 - ODONTÓLOGO", "2 - RECEPCIONISTA", "3 - BODEGUERO" }));
 
         javax.swing.GroupLayout panelTipoFuncionarioLayout = new javax.swing.GroupLayout(panelTipoFuncionario);
         panelTipoFuncionario.setLayout(panelTipoFuncionarioLayout);
@@ -427,7 +427,7 @@ public class RegistroPacienteFuncionario extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 465, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelTipoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

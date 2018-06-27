@@ -66,7 +66,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel2" pref="0" max="32767" attributes="0"/>
+                      <Component id="jPanel2" pref="465" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="panelTipoFuncionario" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -600,8 +600,11 @@
             <Component class="javax.swing.JComboBox" name="cboTipoFuncionario">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="1">
-                    <StringItem index="0" value="0 - TIPOFUNCIONARIO"/>
+                  <StringArray count="4">
+                    <StringItem index="0" value="0 - ADMINISTRADOR"/>
+                    <StringItem index="1" value="1 - ODONT&#xd3;LOGO"/>
+                    <StringItem index="2" value="2 - RECEPCIONISTA"/>
+                    <StringItem index="3" value="3 - BODEGUERO"/>
                   </StringArray>
                 </Property>
               </Properties>

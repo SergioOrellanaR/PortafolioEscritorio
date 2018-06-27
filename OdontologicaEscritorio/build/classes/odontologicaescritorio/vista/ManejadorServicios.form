@@ -323,7 +323,6 @@
               <Image iconType="3" name="/odontologicaescritorio/vista/img/icn_editar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Editar servicio"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarDatosServiciosActionPerformed"/>

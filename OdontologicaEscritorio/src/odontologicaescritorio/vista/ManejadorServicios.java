@@ -180,7 +180,6 @@ public class ManejadorServicios extends javax.swing.JInternalFrame {
 
         btnEditarDatosServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_editar.png"))); // NOI18N
         btnEditarDatosServicios.setText("Editar servicio");
-        btnEditarDatosServicios.setEnabled(false);
         btnEditarDatosServicios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarDatosServiciosActionPerformed(evt);
