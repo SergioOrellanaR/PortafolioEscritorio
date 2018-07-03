@@ -59,6 +59,7 @@ public class PlanificarMes extends javax.swing.JInternalFrame {
         lblRutOdontologo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(139, 156, 168));
+        setClosable(true);
         setTitle("Asistente de planificación de agenda mensual");
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/odontologicaescritorio/vista/img/icn_reloj.png"))); // NOI18N
 
